@@ -1,0 +1,24 @@
+ Better History
+
+* Vues
+** Day view
+
+Liste des pages visitées dans la journée.
+
+** Week view
+
+7 colonnes par jour.
+Chaque colonne contient la liste des pages visitées durant le jour.
+
+** Month view
+
+Vue calendrier.
+Chaque "bloc" contient la liste de pages visitées durant le jour.
+
+* Liens utiles
+
+Web extension History API: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/history
+
+Web extension Extension Page API: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Extension_pages
+
+Design: https://design.firefox.com/photon/
