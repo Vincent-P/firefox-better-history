@@ -1,0 +1,1 @@
+export INLINE_RUNTIME_CHUNK=false
