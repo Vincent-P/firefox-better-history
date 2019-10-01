@@ -5,7 +5,7 @@
     "version": "0.1",
     "homepage_url": "https://github.com/Vincent-P/firefox-better-history",
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["dist/background.js"]
     },
 
     "browser_action": {
