@@ -64,9 +64,6 @@
     "web-ext-webpack-plugin": "git+https://github.com/hiikezoe/web-ext-webpack-plugin.git"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
     "watch": "webpack --watch --config config/webpack.config.js",
     "ext-reload": "web-ext run -s build"
   },
