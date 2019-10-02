@@ -3,10 +3,9 @@
     "version": "0.1.0",
     "description": "",
     "scripts": {
-        "build": "webpack -v --display-error-details --progress --colors",
-        "watch": "webpack -v --display-error-details --progress --colors --watch",
-        "ext-reload": "web-ext run -s extension",
-        "ext-reload-dev": "web-ext run -s extension"
+        "build": "webpack --display-error-details --progress --colors",
+        "watch": "webpack --display-error-details --progress --colors --watch",
+        "ext-reload": "web-ext run -s extension"
     },
     "dependencies": {
         "react": "^16.10.1",
