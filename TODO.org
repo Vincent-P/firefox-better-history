@@ -1,12 +1,9 @@
 #+TITLE: Better History
 
-* Build
+* SCSS
 
-Il reste des choses a faire mais ca marche globalement.
-- =npm run build/watch= fonctionne pas, j'ai du faire =node .\node_modules\webpack\bin\webpack.js --watch= pour que ca marche.
-- =web-ext= se ferme pas correctement chez moi depuis powershell.
-- Le fichier =.scss= n'est pas copie dans build.
-- =npm run ext-reload-dev= est cense etre =web-ext run -s .\extension -f "C:\Program Files\Firefox Developer Edition\firefox.exe"=, parce que sinon sous Windows il va chercher dans C:\Program Files(x86)\Mozilla Firefox.
+Les links et inputs ne sont pas finis.
+J'ai pas teste les cards/badges mais en vrai jsuis pas sur qu'on en ait besoin.
 
 * Vues
 ** Day view

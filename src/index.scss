@@ -1,128 +1,59 @@
-$magenta-50: #ff1ad9;
-$magenta-60: #ed00b5;
-$magenta-70: #b5007f;
-$magenta-80: #7d004f;
-$magenta-90: #440027;
+@import 'variables';
 
-$purple-30: #c069ff;
-$purple-40: #ad3bff;
-$purple-50: #9400ff;
-$purple-60: #8000d7;
-$purple-70: #6200a4;
-$purple-80: #440071;
-$purple-90: #25003e;
-
-$blue-40: #45a1ff;
-$blue-50: #0a84ff;
-$blue-50-a30: rgba(10, 132, 255, 0.3);
-$blue-60: #0060df;
-$blue-70: #003eaa;
-$blue-80: #002275;
-$blue-90: #000f40;
-
-$teal-50: #00feff;
-$teal-60: #00c8d7;
-$teal-70: #008ea4;
-$teal-80: #005a71;
-$teal-90: #002d3e;
-
-$green-50: #30e60b;
-$green-60: #12bc00;
-$green-70: #058b00;
-$green-80: #006504;
-$green-90: #003706;
-
-$yellow-50: #ffe900;
-$yellow-60: #d7b600;
-$yellow-70: #a47f00;
-$yellow-80: #715100;
-$yellow-90: #3e2800;
-
-$red-50: #ff0039;
-$red-60: #d70022;
-$red-70: #a4000f;
-$red-80: #5a0002;
-$red-90: #3e0200;
-
-$orange-50: #ff9400;
-$orange-60: #d76e00;
-$orange-70: #a44900;
-$orange-80: #712b00;
-$orange-90: #3e1300;
-
-$grey-10: #f9f9fa;
-$grey-10-a10: rgba(249, 249, 250, 0.1);
-$grey-10-a20: rgba(249, 249, 250, 0.2);
-$grey-10-a40: rgba(249, 249, 250, 0.4);
-$grey-10-a60: rgba(249, 249, 250, 0.6);
-$grey-10-a80: rgba(249, 249, 250, 0.8);
-$grey-20: #ededf0;
-$grey-30: #d7d7db;
-$grey-40: #b1b1b3;
-$grey-50: #737373;
-$grey-60: #4a4a4f;
-$grey-70: #38383d;
-$grey-80: #2a2a2e;
-$grey-90: #0c0c0d;
-$grey-90-a05: rgba(12, 12, 13, 0.05);
-$grey-90-a10: rgba(12, 12, 13, 0.1);
-$grey-90-a20: rgba(12, 12, 13, 0.2);
-$grey-90-a30: rgba(12, 12, 13, 0.3);
-$grey-90-a40: rgba(12, 12, 13, 0.4);
-$grey-90-a50: rgba(12, 12, 13, 0.5);
-$grey-90-a60: rgba(12, 12, 13, 0.6);
-$grey-90-a70: rgba(12, 12, 13, 0.7);
-$grey-90-a80: rgba(12, 12, 13, 0.8);
-$grey-90-a90: rgba(12, 12, 13, 0.9);
-
-$ink-70: #363959;
-$ink-80: #202340;
-$ink-90: #0f1126;
-
-$white-100: #ffffff;
-
+html {
+}
 
 body {
     margin: 0;
+    padding: 0;
+
     font-family: -apple-system, "Fira Sans", sans-serif;
     background-color: $grey-10;
 
     color: $grey-90;
     font-size: 15px;
     font-weight: 400;
+    line-height: 1.8;
 }
 
-.primary-icon {
-    color: $grey-90-a80;
+a {
+    color: $blue-50;
+    text-decoration: none;
+
+    &:hover {
+        color: $blue-60;
+    }
+
+    &:active {
+        color: $blue-70;
+    }
 }
 
-.secondary-icon {
-    color: $grey-90-a60;
-}
-
-.secondary-text {
-    color: $grey-50;
+p, h1 {
+    margin: 0;
 }
 
 
 /* Typography */
-
 h1 {
-    font-size: 36px;
-    font-weight: 200;
+    font-size: 22px;
+    font-weight: 300;
+    line-weight: 1.2;
+
+    .display {
+        font-size: 36px;
+        font-weight: 200;
+    }
 }
 
 h2 {
-    font-size: 22px;
-    font-weight: 300;
+    font-size: 17px;
+    font-weight: 600;
+
+    margin-block: calc(#{$base-unit} * 4) 0;
 }
 
 h3 {
-    font-size: 17px;
-    font-weight: 600;
-}
-
-h4 {
     font-size: 13px;
     font-weight: 600;
 }
@@ -138,9 +69,215 @@ figcaption {
 }
 
 small {
-    font-size: 5px;
+    font-size: 11px;
 }
 
 strong {
     font-weight: 700;
+}
+
+.primary-icon {
+    color: $grey-90-a80;
+}
+
+.secondary-icon {
+    color: $grey-90-a60;
+}
+
+.secondary-text {
+    color: $grey-50;
+}
+
+
+/* Utils */
+.ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/*
+ * Layout elements
+ */
+
+/* for horizontal rules / separators */
+.separator {
+    border-style: solid none none none;
+    border-color: $grey-30;
+}
+
+/* adds breathing space to the separator */
+.separator--breathe {
+    margin: calc(#{$base-unit} * 5) 0;
+}
+
+/* a series of button-like elements, layed out horizontally */
+.toolbar {
+    display: flex;
+    column-gap: calc(#{$base-unit} * 2);
+}
+
+.toolbar--right-align {
+    justify-content: end;
+}
+
+/*
+Form controls
+*/
+.default-button, .default-input {
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Buttons from Photon */
+
+.default-button, .primary-button {
+    -moz-appearance: none;
+    margin: 0;
+    min-width: calc(#{$base-unit} * 33);
+    height: calc(#{$base-unit} * 8);
+    padding-inline-start: calc(#{$base-unit} * 5);
+    padding-inline-end: calc(#{$base-unit} * 5);
+
+    border: none;
+    border-radius: calc(#{$base-unit} / 2);
+
+    &:disabled {
+        opacity: 0.4;
+    }
+
+    /* Smaller variant size */
+    &--micro {
+        padding-inline-start: calc(2 * #{$base-unit});
+        padding-inline-end: calc(2 * #{$base-unit});
+        font-size: 11px;
+        min-width: 0px;
+        height: calc(#{$base-unit} * 6);
+    }
+
+    /* Bigger variant size */
+    &--puffy {
+        padding-inline-start: calc(4 * #{$base-unit});
+        padding-inline-end: calc(4 * #{$base-unit});
+        font-size: 15px;
+        min-width: 0px;
+        height: calc(#{$base-unit} * 12);
+        border-radius: #{$base-unit};
+    }
+}
+
+/* Photon button representing a primary action */
+.primary-button {
+    color: $white-100;
+    background-color: $blue-60;
+
+    &:enabled:hover {
+        background-color: $blue-70;
+    }
+
+    &:enabled:active {
+        background-color: $blue-80;
+    }
+}
+
+/* Photon standard button */
+.default-button {
+    color: $grey-90;
+    background-color: $grey-90-a10;
+
+    &:enabled:hover {
+        background: $grey-90-a20;
+    }
+
+    &:enabled:active {
+        background: $grey-90-a30;
+    }
+}
+
+/* Photon ghost button. Icon button with no background */
+.ghost-button {
+    background: transparent;
+    border: none;
+    border-radius: calc(#{$base-unit} / 2);
+    fill: $grey-90-a80;
+    height: calc(#{$base-unit} * 6);
+    padding: $base-unit;
+    width: calc(#{$base-unit} * 6);
+
+    -moz-context-properties: fill;
+
+    &:hover {
+        background-color: $grey-30;
+    }
+
+    &:active {
+        background-color: $grey-40;
+    }
+}
+
+/* Standard inputs */
+.default-input {
+    line-height: unset;
+    padding: 0 calc(#{$base-unit} * 2);
+    height: calc(#{$base-unit} * 8);
+
+    border: 1px solid $grey-30;
+    border-radius: calc(#{$base-unit} / 2);
+    border-color: $grey-90-a20;
+
+    color: $grey-90;
+    background-color: $white-100;
+
+    ::placeholder {
+        color: $grey-50;
+    }
+}
+
+/*
+ * Other UI components
+ */
+
+/*
+ * A small, colored badge.
+ * NOTE: styles borrowed from Photon's micro buttons (there aren't badges)
+ */
+.badge {
+    background: $grey-30;
+    border-radius: calc(#{$base-unit} / 2);
+    font-size: 11px;
+    padding: $base-unit calc(2 * #{$base-unit});
+
+    &--info {
+        background: $blue-50;
+    }
+
+    &--success {
+        background: $green-50;
+    }
+
+    &--warning {
+        background: #fffbd6;
+    }
+
+    &--error {
+        background: #fdf2f5;
+    }
+}
+
+/*
+ * Card UI, from Photon
+ */
+.card {
+    background-color: $white-100;
+    border-radius: $base-unit;
+    box-shadow: 0 1px 4px $grey-90-a10;
+    box-sizing: border-box;
+    min-width: min-content;
+    padding-block: calc(#{$base-unit} * 5);
+
+    &__heading {
+        font-size: 17px; /* Note: this is from Photon Title 20 */
+        font-weight: 600; /* Note: this is from Photon Title 20 */
+    }
 }
