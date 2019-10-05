@@ -19,24 +19,31 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentVue: VUES.DAY,
+            currentView: VUES.DAY,
             date: Moment(),
-            historyApi: new HistoryApi()
+            historyApi: new HistoryApi(),
+            loaded: false
         };
+
+        this.state.historyApi.init()
+            .then(() => {
+                this.setState({loaded: true});
+                console.log("loaded!");
+            });
     }
 
     setVue (newVue) {
-        this.setState({ currentVue: newVue });
+        this.setState({ currentView: newVue });
     }
 
     previous () {
         const newDate = this.state.date;
 
-        if (this.state.currentVue === VUES.DAY) {
+        if (this.state.currentView === VUES.DAY) {
             newDate.subtract(1, 'days');
-        } else if(this.state.currentVue === VUES.WEEK) {
+        } else if(this.state.currentView === VUES.WEEK) {
             newDate.subtract(1, 'weeks');
-        } else if(this.state.currentVue === VUES.MONTH) {
+        } else if(this.state.currentView === VUES.MONTH) {
             newDate.subtract(1, 'months');
         }
 
@@ -46,30 +53,20 @@ class App extends React.Component {
     next () {
         const newDate = this.state.date;
 
-        if (this.state.currentVue === VUES.DAY) {
+        if (this.state.currentView === VUES.DAY) {
             newDate.add(1, 'days');
-        } else if(this.state.currentVue === VUES.WEEK) {
+        } else if(this.state.currentView === VUES.WEEK) {
             newDate.add(1, 'weeks');
-        } else if(this.state.currentVue === VUES.MONTH) {
+        } else if(this.state.currentView === VUES.MONTH) {
             newDate.add(1, 'months');
         }
 
         this.setState({ date: newDate });
     }
 
-    renderVue() {
-        if (this.state.currentVue === VUES.DAY) {
-                return (<DayView date={this.state.date} historyApi={this.state.historyApi}/>);
-        } else if(this.state.currentVue === VUES.WEEK) {
-                return (<WeekVue date={this.state.date} historyApi={this.state.historyApi}/>);
-        } else if(this.state.currentVue === VUES.MONTH) {
-                return (<MonthVue date={this.state.date} historyApi={this.state.historyApi}/>);
-        }
-
-        return (<span> View not found </span>);
-    }
-
     render() {
+        const { currentView, historyApi, date, loaded } = this.state;
+
         return (
             <div>
                 <header>
@@ -89,7 +86,12 @@ class App extends React.Component {
                     <input className="default-input search-input" placeholder="Search a website"/>
                     <button className="search-button search-button--cancel" title="Foward"/>
                 </div>
-                { this.renderVue() }
+
+                { !loaded ? <p>Loading...</p>
+                  : currentView == VUES.DAY ? <DayView date={date} historyApi={historyApi}/>
+                  : currentView == VUES.WEEK ? <WeekVue date={date} historyApi={historyApi}/>
+                  : <MonthVue date={date} historyApi={historyApi}/>
+                }
             </div>
         );
     }

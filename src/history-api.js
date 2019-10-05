@@ -2,9 +2,12 @@ import Moment from "moment";
 
 export default class HistoryApi {
     constructor() {
-        console.log(browser.history);
+        this.historyItems = [];
+        this.visits = [];
+    }
 
-        this.getHistoryItems()
+    init() {
+        return this.getHistoryItems()
             .then((historyItems) => {
                 this.historyItems = historyItems;
             })
@@ -42,10 +45,6 @@ export default class HistoryApi {
     /**
      */
     getDayVisits(date) {
-        if (!this.visits) {
-            return [];
-        }
-
         const dayHistory = [];
 
         this.visits.forEach(visitArray => {
@@ -65,10 +64,6 @@ export default class HistoryApi {
     /**
      */
     getWeekVisits(date) {
-        if (!this.visits) {
-            return [];
-        }
-
         const dayHistory = [];
 
         this.visits.forEach(visitArray => {
@@ -95,10 +90,6 @@ export default class HistoryApi {
      * @param {Date} date a date used to check the month and year of each visits
      */
     getMonthVisits(date) {
-        if (!this.visits) {
-            return [];
-        }
-
         const monthHistory = [];
 
         this.visits.forEach(visitArray => {
