@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DayVue from "DayVue";
+import DayView from "day-view";
 import WeekVue from "WeekVue";
 import MonthVue from "MonthVue";
 
@@ -59,7 +59,7 @@ class App extends React.Component {
 
     renderVue() {
         if (this.state.currentVue === VUES.DAY) {
-                return (<DayVue date={this.state.date} historyApi={this.state.historyApi}/>);
+                return (<DayView date={this.state.date} historyApi={this.state.historyApi}/>);
         } else if(this.state.currentVue === VUES.WEEK) {
                 return (<WeekVue date={this.state.date} historyApi={this.state.historyApi}/>);
         } else if(this.state.currentVue === VUES.MONTH) {
