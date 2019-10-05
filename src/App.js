@@ -77,6 +77,7 @@ class App extends React.Component {
                 </header>
 
                 <div className="toolbar">
+                    <h2>{ this.state.date.format("Do MMMM YYYY") }</h2>
                     <button className="ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
                     <button className="ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
                     <button className="default-button" onClick={ () => this.setVue(VUES.DAY) }>Day</button>

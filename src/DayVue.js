@@ -15,10 +15,10 @@ class DayVue extends React.Component {
 
             return (
                 <div className="website-day">
-                    <img src="/globe.svg"/>
                     <span>
                         { Moment(visit.visitTime).format("h:mm a") + ' ' }
                     </span>
+                    <img src="/globe.svg"/>
                     <span>
                         { visitInfo.title + ' ' }
                     </span>
@@ -32,9 +32,6 @@ class DayVue extends React.Component {
     render() {
         return (
             <div>
-                <h2>
-                    { this.props.date.format("Do MMMM YYYY") }
-                </h2>
                 { this.renderDayOccurences() }
             </div>
         );
