@@ -1,13 +1,13 @@
 import React from 'react';
 
 import DayView from "day-view";
-import WeekVue from "WeekVue";
-import MonthVue from "MonthVue";
+import WeekView from "week-view";
+import MonthView from "month-view";
 
 import Moment from "moment";
 import HistoryApi from "history-api";
 
-const VUES = {
+const VIEWS = {
     DAY: 1,
     WEEK: 2,
     MONTH: 3,
@@ -19,7 +19,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentView: VUES.DAY,
+            currentView: VIEWS.DAY,
             date: Moment(),
             historyApi: new HistoryApi(),
             loading: true
@@ -31,18 +31,18 @@ class App extends React.Component {
             });
     }
 
-    setVue (newVue) {
-        this.setState({ currentView: newVue });
+    setView (newView) {
+        this.setState({ currentView: newView });
     }
 
     previous () {
         const newDate = this.state.date;
 
-        if (this.state.currentView === VUES.DAY) {
+        if (this.state.currentView === VIEWS.DAY) {
             newDate.subtract(1, 'days');
-        } else if(this.state.currentView === VUES.WEEK) {
+        } else if(this.state.currentView === VIEWS.WEEK) {
             newDate.subtract(1, 'weeks');
-        } else if(this.state.currentView === VUES.MONTH) {
+        } else if(this.state.currentView === VIEWS.MONTH) {
             newDate.subtract(1, 'months');
         }
 
@@ -52,11 +52,11 @@ class App extends React.Component {
     next () {
         const newDate = this.state.date;
 
-        if (this.state.currentView === VUES.DAY) {
+        if (this.state.currentView === VIEWS.DAY) {
             newDate.add(1, 'days');
-        } else if(this.state.currentView === VUES.WEEK) {
+        } else if(this.state.currentView === VIEWS.WEEK) {
             newDate.add(1, 'weeks');
-        } else if(this.state.currentView === VUES.MONTH) {
+        } else if(this.state.currentView === VIEWS.MONTH) {
             newDate.add(1, 'months');
         }
 
@@ -65,6 +65,12 @@ class App extends React.Component {
 
     render() {
         const { currentView, historyApi, date, loading } = this.state;
+
+        let selectedDate =
+            currentView == VIEWS.DAY ? date.format("Do MMMM YYYY")
+            : currentView == VIEWS.WEEK ?  'Week ' + date.format("w, YYYY")
+            : date.format("MMMM, YYYY");
+
 
         return (
             <div>
@@ -78,18 +84,18 @@ class App extends React.Component {
                 </div>
 
                 <div className="toolbar">
-                    <h2>{ this.state.date.format("Do MMMM YYYY") }</h2>
+                    <h2>{ selectedDate }</h2>
                     <button className="toolbar-item-right ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
                     <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
-                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.DAY) }>Day</button>
-                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.WEEK) }>Week</button>
-                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.MONTH) }>Month</button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.DAY) }>Day</button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.WEEK) }>Week</button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.MONTH) }>Month</button>
                 </div>
 
                 { loading ? <p>Loading...</p>
-                  : currentView == VUES.DAY ? <DayView date={date} historyApi={historyApi}/>
-                  : currentView == VUES.WEEK ? <WeekVue date={date} historyApi={historyApi}/>
-                  : <MonthVue date={date} historyApi={historyApi}/>
+                  : currentView == VIEWS.DAY ? <DayView date={date} historyApi={historyApi}/>
+                  : currentView == VIEWS.WEEK ? <WeekView date={date} historyApi={historyApi}/>
+                  : <MonthView date={date} historyApi={historyApi}/>
                 }
             </div>
         );
