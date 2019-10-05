@@ -1,13 +1,13 @@
 import React from 'react';
 
+import Moment from "moment";
+
 class DayVue extends React.Component {
     renderDayOccurences() {
         const visits = this.props.historyApi.getDayVisits(this.props.date);
 
         const formattedVisits = visits.map(visit => {
             const visitInfo = this.props.historyApi.getVisitInfos(visit);
-
-            console.log(visitInfo);
 
             if (!visitInfo) {
                 return (<li> Visit not found </li>);
@@ -16,7 +16,7 @@ class DayVue extends React.Component {
             return (
                 <li>
                     <span>
-                        { new Date(visit.visitTime).toDateString() + ' ' }
+                        { Moment(visit.visitTime).toString() + ' ' }
                     </span>
                     <span>
                         { visitInfo.title + ' ' }
@@ -34,6 +34,9 @@ class DayVue extends React.Component {
     render() {
         return (
             <div>
+                <h1>
+                    { this.props.date.format("Do MMMM YYYY") }
+                </h1>
                 <ul>
                     { this.renderDayOccurences() }
                 </ul>

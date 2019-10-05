@@ -1,3 +1,5 @@
+import Moment from "moment";
+
 export default class HistoryApi {
     constructor() {
         console.log(browser.history);
@@ -8,9 +10,6 @@ export default class HistoryApi {
             .then((visits) => {
                 this.visits = visits;
                 console.log("History cached")
-
-                console.log("Last visits history : ", this.historyItems);
-                console.log("Each visits history : ", this.visits);
             });
     }
 
@@ -34,11 +33,9 @@ export default class HistoryApi {
 
         this.visits.forEach(visitArray => {
             visitArray.forEach(visit => {
-                const visitDate = new Date(visit.visitTime);
+                const visitDate = Moment(visit.visitTime);
 
-                if (date.getDate() === visitDate.getDate()
-                    && date.getMonth() === visitDate.getMonth()
-                    && date.getYear() === visitDate.getYear()) {
+                if (visitDate.isSame(date, 'day')) {
                     dayHistory.push(visit);
                 }
             });
@@ -51,6 +48,25 @@ export default class HistoryApi {
     /**
      */
     getWeekVisits(date) {
+        const dayHistory = [];
+
+        this.visits.forEach(visitArray => {
+            visitArray.forEach(visit => {
+                const visitDate = Moment(visit.visitTime);
+
+                // See the moment documentation https://momentjs.com/docs/#/query/is-same/
+                // NOTE: moment().isSame() has undefined behavior and should not be used!
+                // If the code runs fast the initial created moment would be the same as the one
+                // created in isSame to perform the check, so the result would be true.
+                // But if the code runs slower it's possible that the moment created in isSame
+                // is measurably after the one created in moment(), so the call would return false.
+                if (visitDate.isSame(date, 'week')) {
+                    dayHistory.push(visit);
+                }
+            });
+        });
+
+        return dayHistory;
     }
 
 
@@ -62,10 +78,9 @@ export default class HistoryApi {
 
         this.visits.forEach(visitArray => {
             visitArray.forEach(visit => {
-                const visitDate = new Date(visit.visitTime);
+                const visitDate = Moment(visit.visitTime);
 
-                if (date.getMonth() === visitDate.getMonth()
-                    && date.getYear() === visitDate.getYear()) {
+                if (visitDate.isSame(date, 'month')) {
                     monthHistory.push(visit);
                 }
             });

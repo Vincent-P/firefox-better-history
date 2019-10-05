@@ -5,6 +5,7 @@ import DayVue from "DayVue";
 import WeekVue from "WeekVue";
 import MonthVue from "MonthVue";
 
+import Moment from "moment";
 import HistoryApi from "history-api";
 
 const VUES = {
@@ -20,7 +21,7 @@ class App extends React.Component {
 
         this.state = {
             currentVue: VUES.MONTH,
-            date: new Date(),
+            date: Moment(),
             historyApi: new HistoryApi()
         };
     }
@@ -29,16 +30,47 @@ class App extends React.Component {
         this.setState({ currentVue: newVue });
     }
 
-    render() {
-        let HistoryVue = null;
-        
+    previous () {
+        const newDate = this.state.date;
+
         if (this.state.currentVue === VUES.DAY) {
-                HistoryVue = <DayVue date={this.state.date} historyApi={this.state.historyApi}/>
+            newDate.subtract(1, 'days');
         } else if(this.state.currentVue === VUES.WEEK) {
-                HistoryVue = <WeekVue/>
+            newDate.subtract(1, 'weeks');
         } else if(this.state.currentVue === VUES.MONTH) {
-                HistoryVue = <MonthVue/>
+            newDate.subtract(1, 'months');
         }
+
+        this.setState({ date: newDate });
+    }
+
+    next () {
+        const newDate = this.state.date;
+
+        if (this.state.currentVue === VUES.DAY) {
+            newDate.add(1, 'days');
+        } else if(this.state.currentVue === VUES.WEEK) {
+            newDate.add(1, 'weeks');
+        } else if(this.state.currentVue === VUES.MONTH) {
+            newDate.add(1, 'months');
+        }
+
+        this.setState({ date: newDate });
+    }
+
+    renderVue() {
+        if (this.state.currentVue === VUES.DAY) {
+                return (<DayVue date={this.state.date} historyApi={this.state.historyApi}/>);
+        } else if(this.state.currentVue === VUES.WEEK) {
+                return (<WeekVue date={this.state.date} historyApi={this.state.historyApi}/>);
+        } else if(this.state.currentVue === VUES.MONTH) {
+                return (<MonthVue date={this.state.date} historyApi={this.state.historyApi}/>);
+        }
+
+        return (<span> Vue not found </span>);
+    }
+
+    render() {
 
         return (
             <div>
@@ -50,8 +82,10 @@ class App extends React.Component {
                     <button className="default-button" onClick={ () => this.setVue(VUES.WEEK) }>Week</button>
                     <button className="default-button" onClick={ () => this.setVue(VUES.MONTH) }>Month</button>
                     <button className="primary-button">Done</button>
+                    <button className="default-button" onClick={ () => this.previous() }> { '<' }</button>
+                    <button className="default-button" onClick={ () => this.next() }> { '>' } </button>
                 </div>
-                { HistoryVue }
+                { this.renderVue() }
                 <p>
                     <button className="primary-button primary-button--micro">Micro</button>
                 </p>

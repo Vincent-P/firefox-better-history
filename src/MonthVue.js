@@ -1,13 +1,12 @@
 import React from 'react';
 
 class MonthVue extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
+                <h1>
+                    { this.props.date.format("MMMM, YYYY") }
+                </h1>
             </div>
         );
     }
