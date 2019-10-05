@@ -4,15 +4,25 @@ export default class HistoryApi {
     constructor() {
         console.log(browser.history);
 
-        browser.history.search({ text: "" })
-            .then((historyItems) => { this.historyItems = historyItems; })
+        this.getHistoryItems()
+            .then((historyItems) => {
+                this.historyItems = historyItems;
+            })
             .then(() => this.getVisits())
             .then((visits) => {
                 this.visits = visits;
-                console.log("History cached")
-            });
+            })
+            .then(console.log("History cached"));
     }
 
+
+    /**
+     * Warning: Direct call to the browser internal api
+     * This function is called when creating the history api and it's result is cached
+     */
+    getHistoryItems() {
+        return browser.history.search({ text: "" });
+    }
 
     /**
      */
