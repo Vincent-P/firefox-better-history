@@ -5,7 +5,8 @@
     "scripts": {
         "build": "webpack --display-error-details --progress --colors",
         "watch": "webpack --display-error-details --progress --colors --watch",
-        "ext-reload": "web-ext run -s extension"
+        "ext-reload": "web-ext run -s extension",
+        "ext-reload-dev": "web-ext run -s extension --firefox=firefoxdeveloperedition -v"
     },
     "dependencies": {
         "react": "^16.10.1",

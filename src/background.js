@@ -12,4 +12,4 @@ function openMyPage() {
 Add openMyPage() as a listener to clicks on the browser action.
 */
 browser.browserAction.onClicked.addListener(openMyPage);
-browser.tabs.reload();
+openMyPage();
