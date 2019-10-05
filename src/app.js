@@ -22,13 +22,12 @@ class App extends React.Component {
             currentView: VUES.DAY,
             date: Moment(),
             historyApi: new HistoryApi(),
-            loaded: false
+            loading: true
         };
 
         this.state.historyApi.init()
             .then(() => {
-                this.setState({loaded: true});
-                console.log("loaded!");
+                this.setState({loading: false});
             });
     }
 
@@ -65,7 +64,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { currentView, historyApi, date, loaded } = this.state;
+        const { currentView, historyApi, date, loading } = this.state;
 
         return (
             <div>
@@ -73,21 +72,21 @@ class App extends React.Component {
                     <h1>History</h1>
                 </header>
 
-                <div className="toolbar">
-                    <h2>{ this.state.date.format("Do MMMM YYYY") }</h2>
-                    <button className="ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
-                    <button className="ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
-                    <button className="default-button" onClick={ () => this.setVue(VUES.DAY) }>Day</button>
-                    <button className="default-button" onClick={ () => this.setVue(VUES.WEEK) }>Week</button>
-                    <button className="default-button" onClick={ () => this.setVue(VUES.MONTH) }>Month</button>
-                </div>
-
-                <div className="search-wrapper">
+                <div className="search-wrapper center">
                     <input className="default-input search-input" placeholder="Search a website"/>
                     <button className="search-button search-button--cancel" title="Foward"/>
                 </div>
 
-                { !loaded ? <p>Loading...</p>
+                <div className="toolbar">
+                    <h2>{ this.state.date.format("Do MMMM YYYY") }</h2>
+                    <button className="toolbar-item-right ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
+                    <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.DAY) }>Day</button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.WEEK) }>Week</button>
+                    <button className="toolbar-item-right default-button" onClick={ () => this.setVue(VUES.MONTH) }>Month</button>
+                </div>
+
+                { loading ? <p>Loading...</p>
                   : currentView == VUES.DAY ? <DayView date={date} historyApi={historyApi}/>
                   : currentView == VUES.WEEK ? <WeekVue date={date} historyApi={historyApi}/>
                   : <MonthVue date={date} historyApi={historyApi}/>

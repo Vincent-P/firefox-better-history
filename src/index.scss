@@ -137,6 +137,9 @@ strong {
 /* a series of button-like elements, layed out horizontally */
 .toolbar {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
     align-items: center;
     column-gap: calc(#{$base-unit});
     margin: $base-unit 0;
@@ -144,6 +147,15 @@ strong {
 
 .toolbar--right-align {
     justify-content: end;
+}
+
+.toolbar h2 {
+    margin-right: auto;
+}
+
+.center {
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 /*
