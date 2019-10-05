@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
 
     font-family: -apple-system, "Fira Sans", sans-serif;
@@ -14,6 +14,8 @@ body {
     font-size: 15px;
     font-weight: 400;
     line-height: 1.8;
+
+    width: 80%;
 }
 
 a {
@@ -22,10 +24,15 @@ a {
 
     &:hover {
         color: $blue-60;
+        text-decoration: underline;
     }
 
     &:active {
         color: $blue-70;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 1px $blue-50, 0 0 0 $base-unit $blue-50-a30;
     }
 }
 
@@ -116,6 +123,7 @@ strong {
 .toolbar {
     display: flex;
     column-gap: calc(#{$base-unit} * 2);
+    margin: $base-unit 0;
 }
 
 .toolbar--right-align {
@@ -221,17 +229,48 @@ Form controls
     line-height: unset;
     padding: 0 calc(#{$base-unit} * 2);
     height: calc(#{$base-unit} * 8);
+    margin: $base-unit 0;
 
     border: 1px solid $grey-30;
     border-radius: calc(#{$base-unit} / 2);
     border-color: $grey-90-a20;
 
     color: $grey-90;
+    font-size: 0.833rem;
     background-color: $white-100;
 
     ::placeholder {
         color: $grey-50;
     }
+
+    &:hover {
+        border-color: $grey-90-a30;
+    }
+
+    &:focus {
+        border-color: $blue-50;
+        box-shadow: 0 0 0 1px $blue-50, 0 0 0 $base-unit $blue-50-a30;
+    }
+
+    .warning {
+        border-color: $yellow-60;
+        box-shadow: 0 0 0 1px $yellow-60, 0 0 0 $base-unit $yellow-60-a30;
+    }
+
+    &:invalid, .error {
+        border-color: $red-60;
+        box-shadow: 0 0 0 1px $red-60, 0 0 0 $base-unit $red-60-a30;
+    }
+}
+
+input, label {
+    display:block;
+}
+
+label {
+    color: $grey-90;
+    font-size: 0.833rem;
+    margin-bottom: calc(#{$base-unit} * 2);
 }
 
 /*
@@ -280,4 +319,67 @@ Form controls
         font-size: 17px; /* Note: this is from Photon Title 20 */
         font-weight: 600; /* Note: this is from Photon Title 20 */
     }
+}
+
+/*
+ * History elements
+ */
+.search-wrapper {
+    cursor: default;
+    display: flex;
+    height: 32px;
+    position: relative;
+    width: 736px; // todo
+    margin: calc(#{$base-unit} * 2) 0;
+}
+
+.search-input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    padding-inline-start: 8px;
+    padding-inline-end: 24px;
+}
+
+.search-globe {
+    background: url("/Globe.svg") no-repeat center center;
+    background-size: auto;
+    background-size: 16px 16px;
+    border: 0;
+    border-radius: 0 3px 3px 0;
+    -moz-context-properties: fill;
+    fill: $grey-90-a40;
+    height: 100%;
+    inset-inline-end: 0;
+    position: absolute;
+    width: 32px;
+}
+
+.search-button {
+    background: url("chrome://browser/skin/forward.svg") no-repeat center center;
+    background-size: auto;
+    background-size: 16px 16px;
+    border: 0;
+    border-radius: 0 3px 3px 0;
+    -moz-context-properties: fill;
+    fill: $grey-90-a40;
+    height: 100%;
+    inset-inline-end: 0;
+    position: absolute;
+    width: 32px;
+}
+
+
+header {
+    margin-bottom: calc(#{$base-unit} * 2);
+}
+
+.website-day {
+    margin: calc(#{$base-unit} * 2) 0;
+    box-shadow: $shadow-10;
+    border-radius: $base-unit;
+    box-sizing: border-box;
+    background-color: $white-100;
+    padding: $base-unit;
 }
