@@ -23,7 +23,7 @@ export default class HistoryApi {
      * This function is called when creating the history api and it's result is cached
      */
     getHistoryItems() {
-        return browser.history.search({ text: "", maxResult: Number.MAX_SAFE_INTEGER });
+        return browser.history.search({ text: "", maxResults: Number.MAX_SAFE_INTEGER });
     }
 
     /**
