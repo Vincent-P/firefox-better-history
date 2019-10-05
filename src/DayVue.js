@@ -16,7 +16,7 @@ class DayVue extends React.Component {
             return (
                 <li>
                     <span>
-                        { Moment(visit.visitTime).toString() + ' ' }
+                        { Moment(visit.visitTime).format("h:mm a") + ' ' }
                     </span>
                     <span>
                         { visitInfo.title + ' ' }
