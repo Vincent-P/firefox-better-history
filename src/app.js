@@ -32,7 +32,7 @@ class App extends React.Component {
     }
 
     setView (newView) {
-        this.setState({ currentView: newView });
+        this.setState({ currentView: newView, date: Moment() });
     }
 
     previous () {
