@@ -27,7 +27,7 @@ export default class HistoryApi {
      * This function is called when creating the history api and it's result is cached
      */
     getHistoryItems() {
-        return browser.history.search({ text: "" });
+        return browser.history.search({ text: "", maxResult: Number.MAX_SAFE_INTEGER });
     }
 
     /**
@@ -108,6 +108,13 @@ export default class HistoryApi {
     /**
      */
     getVisitInfos(visit) {
-        return this.historyItems.find(historyItem => historyItem.id === visit.id);
+        const { url, title, visitCount } = this.historyItems.find(historyItem => historyItem.id === visit.id);
+
+        return {
+            url,
+            title,
+            visitCount,
+            visitTime: visit.visitTime,
+        };
     }
 }
