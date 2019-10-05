@@ -10,5 +10,9 @@
 
     "browser_action": {
         "default_icon": "logo192.png"
-    }
+    },
+
+    "permissions": [
+        "history"
+    ]
 }
