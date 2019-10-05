@@ -404,7 +404,7 @@ header {
 .website-day {
     display: flex;
     align-items: center;
-    column-gap: calc(#{$base-unit});
+    column-gap: calc(#{$base-unit} * 2);
 
     margin: calc(#{$base-unit} * 2) 0;
     box-shadow: $shadow-10;

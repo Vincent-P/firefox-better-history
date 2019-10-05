@@ -14,10 +14,6 @@ export default class HistoryApi {
             .then(() => this.getVisits())
             .then((visits) => {
                 this.visits = visits;
-            })
-            .then(() => {
-                console.log("History cached");
-                console.log(this.visits);
             });
     }
 
