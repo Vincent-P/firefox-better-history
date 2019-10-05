@@ -12,7 +12,10 @@ export default class HistoryApi {
             .then((visits) => {
                 this.visits = visits;
             })
-            .then(console.log("History cached"));
+            .then(() => {
+                console.log("History cached");
+                console.log(this.visits);
+            });
     }
 
 
@@ -39,6 +42,10 @@ export default class HistoryApi {
     /**
      */
     getDayVisits(date) {
+        if (!this.visits) {
+            return [];
+        }
+
         const dayHistory = [];
 
         this.visits.forEach(visitArray => {
@@ -58,6 +65,10 @@ export default class HistoryApi {
     /**
      */
     getWeekVisits(date) {
+        if (!this.visits) {
+            return [];
+        }
+
         const dayHistory = [];
 
         this.visits.forEach(visitArray => {
@@ -84,6 +95,10 @@ export default class HistoryApi {
      * @param {Date} date a date used to check the month and year of each visits
      */
     getMonthVisits(date) {
+        if (!this.visits) {
+            return [];
+        }
+
         const monthHistory = [];
 
         this.visits.forEach(visitArray => {

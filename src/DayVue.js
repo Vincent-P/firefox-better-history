@@ -14,18 +14,16 @@ class DayVue extends React.Component {
             }
 
             return (
-                <li>
+                <div className="website-day">
+                    <img src="/globe.svg"/>
                     <span>
                         { Moment(visit.visitTime).format("h:mm a") + ' ' }
                     </span>
                     <span>
                         { visitInfo.title + ' ' }
                     </span>
-                    <span>
-                        { visitInfo.url }
-                    </span>
-                </li>
-            );
+                    <a href={ visitInfo.url } target="_blank" rel="noopener noreferrer">Link</a>
+                </div>);
         });
 
         return formattedVisits;
@@ -34,12 +32,10 @@ class DayVue extends React.Component {
     render() {
         return (
             <div>
-                <h1>
+                <h2>
                     { this.props.date.format("Do MMMM YYYY") }
-                </h1>
-                <ul>
-                    { this.renderDayOccurences() }
-                </ul>
+                </h2>
+                { this.renderDayOccurences() }
             </div>
         );
     }

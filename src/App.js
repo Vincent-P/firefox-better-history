@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 
 import DayVue from "DayVue";
 import WeekVue from "WeekVue";
@@ -20,7 +19,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentVue: VUES.MONTH,
+            currentVue: VUES.DAY,
             date: Moment(),
             historyApi: new HistoryApi()
         };
@@ -67,35 +66,29 @@ class App extends React.Component {
                 return (<MonthVue date={this.state.date} historyApi={this.state.historyApi}/>);
         }
 
-        return (<span> Vue not found </span>);
+        return (<span> View not found </span>);
     }
 
     render() {
-
         return (
             <div>
                 <header>
                     <h1>History</h1>
                 </header>
+
                 <div className="toolbar">
+                    <button className="ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
+                    <button className="ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
                     <button className="default-button" onClick={ () => this.setVue(VUES.DAY) }>Day</button>
                     <button className="default-button" onClick={ () => this.setVue(VUES.WEEK) }>Week</button>
                     <button className="default-button" onClick={ () => this.setVue(VUES.MONTH) }>Month</button>
-                    <button className="primary-button">Done</button>
-                    <button className="default-button" onClick={ () => this.previous() }> { '<' }</button>
-                    <button className="default-button" onClick={ () => this.next() }> { '>' } </button>
+                </div>
+
+                <div className="search-wrapper">
+                    <input className="default-input search-input" placeholder="Search a website"/>
+                    <button className="search-button search-button--cancel" title="Foward"/>
                 </div>
                 { this.renderVue() }
-                <p>
-                    <button className="primary-button primary-button--micro">Micro</button>
-                </p>
-                <p>
-                    <button className="primary-button primary-button--puffy">Puffy</button>
-                </p>
-                <form>
-                    <label for="name">Name (4 to 8 characters):</label>
-                    <input className="default-input" type="text" id="name" name="name" placeholder="Placeholder" required/>
-                </form>
             </div>
         );
     }

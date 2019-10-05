@@ -4,8 +4,7 @@ html {
 }
 
 body {
-    margin: 0 auto;
-    padding: 0;
+    margin: calc(#{$base-unit} * 8) auto;
 
     font-family: -apple-system, "Fira Sans", sans-serif;
     background-color: $grey-10;
@@ -15,6 +14,7 @@ body {
     font-weight: 400;
     line-height: 1.8;
 
+    min-height: 100vh;
     width: 80%;
 }
 
@@ -34,6 +34,21 @@ a {
     &:focus {
         box-shadow: 0 0 0 1px $blue-50, 0 0 0 $base-unit $blue-50-a30;
     }
+
+
+    // display icon for external links
+    &:not([class])[href*="//"]::after {
+        background-image: url(/open-in-new.svg);
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        content: "";
+        display: inline-block;
+        height: 16px;
+        margin: -.3rem .15rem 0 .25rem;
+        vertical-align: middle;
+        width: 16px;
+    }
+
 }
 
 p, h1 {
@@ -122,7 +137,8 @@ strong {
 /* a series of button-like elements, layed out horizontally */
 .toolbar {
     display: flex;
-    column-gap: calc(#{$base-unit} * 2);
+    align-items: center;
+    column-gap: calc(#{$base-unit});
     margin: $base-unit 0;
 }
 
@@ -338,36 +354,34 @@ label {
     height: 100%;
     padding: 0;
     margin: 0;
-    padding-inline-start: 8px;
-    padding-inline-end: 24px;
+    padding-inline-start: calc(#{$base-unit} * 2);
+    padding-inline-end: calc(#{$base-unit} * 8);
 }
 
-.search-globe {
-    background: url("/Globe.svg") no-repeat center center;
-    background-size: auto;
+@mixin background-icon($svg) {
+    background: url($svg) no-repeat center center;
     background-size: 16px 16px;
-    border: 0;
-    border-radius: 0 3px 3px 0;
-    -moz-context-properties: fill;
-    fill: $grey-90-a40;
-    height: 100%;
-    inset-inline-end: 0;
-    position: absolute;
-    width: 32px;
 }
 
 .search-button {
-    background: url("chrome://browser/skin/forward.svg") no-repeat center center;
-    background-size: auto;
-    background-size: 16px 16px;
     border: 0;
     border-radius: 0 3px 3px 0;
-    -moz-context-properties: fill;
-    fill: $grey-90-a40;
+
     height: 100%;
     inset-inline-end: 0;
     position: absolute;
     width: 32px;
+    -moz-context-properties: fill;
+    fill: $grey-90;
+    opacity: 60%;
+
+    &--forward {
+        @include background-icon("chrome://browser/skin/forward.svg");
+    }
+
+    &--cancel {
+        @include background-icon("/search-cancel.svg");
+    }
 }
 
 
@@ -376,6 +390,10 @@ header {
 }
 
 .website-day {
+    display: flex;
+    align-items: center;
+    column-gap: calc(#{$base-unit});
+
     margin: calc(#{$base-unit} * 2) 0;
     box-shadow: $shadow-10;
     border-radius: $base-unit;
