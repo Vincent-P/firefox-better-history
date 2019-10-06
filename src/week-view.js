@@ -14,7 +14,7 @@ const WeekView = ({date, historyApi}) => {
                     </span>
                     <img src="/globe.svg"/>
                     <span>
-                        { info.title }
+                        { info.title != "" ? info.title : info.url }
                     </span>
                     <a href={ info.url } target="_blank" rel="noopener noreferrer">Link</a>
                 </div>
