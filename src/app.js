@@ -37,8 +37,17 @@ class App extends React.Component {
 
     updateView () {
         let { historyApi, currentView, date } = this.state;
+        let apiPromise = null;
 
-        historyApi.getDayVisits(date)
+        if (currentView === VIEWS.DAY) {
+            apiPromise = historyApi.getDayVisits(date)
+        } else if (currentView === VIEWS.WEEK) {
+            apiPromise = historyApi.getWeekVisits(date)
+        } else if (currentView === VIEWS.MONTH) {
+            apiPromise = historyApi.getMonthVisits(date)
+        }
+
+        apiPromise
             .then((visits) => {
                 console.log("history items", historyApi.historyItems);
                 console.log("history visits", historyApi.visits);

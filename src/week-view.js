@@ -17,7 +17,7 @@ const History = ({visits}) => (
                 </div>
 
                 <span className="history-item-url ellipsis-text">
-                    <abbr title={ Moment(visit.visitTime).format("MMMM Do YYYY, h:mm:ss a") }>
+                    <abbr title={ Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }>
                         { visit.title != "" ? visit.title : visit.url }
                     </abbr>
                 </span>
@@ -36,13 +36,13 @@ const Column = ({visits}) => (
 
 const WeekView = ({visits}) => (
     <div className="history-week-container">
-        <Column visits={visits}/>
-        <Column visits={visits}/>
-        <Column visits={visits}/>
-        <Column visits={visits}/>
-        <Column visits={visits}/>
-        <Column visits={visits}/>
-        <Column visits={visits}/>
+        <Column visits={visits[0]}/>
+        <Column visits={visits[1]}/>
+        <Column visits={visits[2]}/>
+        <Column visits={visits[3]}/>
+        <Column visits={visits[4]}/>
+        <Column visits={visits[5]}/>
+        <Column visits={visits[6]}/>
     </div>
 );
 

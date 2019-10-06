@@ -97,7 +97,7 @@ export default class HistoryApi {
                         .then(() => {
                             historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime);
 
-                            return historyItems
+                            return historyItems;
                         });
                 }
             )
@@ -106,23 +106,47 @@ export default class HistoryApi {
     /**
      */
     getWeekVisits(date) {
-        const dayHistory = [];
+        const dateStart = Moment(date).startOf('week').toDate();
+        const dateEnd = Moment(date).endOf('week').toDate();
 
-        for (const visit of this.visits) {
-            const visitDate = Moment(visit.visitTime);
+        return browser.history.search({
+            text: "",
+            startTime: dateStart,
+            endTime: dateEnd,
+            maxResults: Number.MAX_SAFE_INTEGER
+        })
+            .then(historyItems => {
+                    const getVisitsPromises = [];
 
-            // See the moment documentation https://momentjs.com/docs/#/query/is-same/
-            // NOTE: moment().isSame() has undefined behavior and should not be used!
-            // If the code runs fast the initial created moment would be the same as the one
-            // created in isSame to perform the check, so the result would be true.
-            // But if the code runs slower it's possible that the moment created in isSame
-            // is measurably after the one created in moment(), so the call would return false.
-            if (visitDate.isSame(date, 'week')) {
-                dayHistory.push(visit);
-            }
-        }
+                    for (const historyItem of historyItems) {
+                        getVisitsPromises.push(browser.history.getVisits({ url: historyItem.url })
+                            .then(visitItems => {
+                                // Look for the latest visit item of this day
+                                const todayFirstVisit = visitItems.reverse().find(
+                                    visitItem => Moment(visitItem.visitTime).isSame(Moment(date), 'week')
+                                );
 
-        return dayHistory;
+                                historyItem.lastVisitTime = todayFirstVisit.visitTime;
+                            })
+                        );
+                    }
+
+                    return Promise.all(getVisitsPromises)
+                        .then(() => {
+                            const daysArray = new Array([], [], [], [], [], [], []);
+
+                            for (const historyItem of historyItems) {
+                                daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+                            }
+
+                            daysArray.forEach(day => {
+                                day.sort((a, b) => b.lastVisitTime - a.lastVisitTime);
+                            });
+
+                            return daysArray;
+                        });
+                }
+            )
     }
 
     /**
