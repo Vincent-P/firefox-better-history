@@ -25,7 +25,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentView: VIEWS.DAY,
+            currentView: VIEWS.WEEK,
             date: Moment(),
             loading: true,
             historyApi: new HistoryApi(),
@@ -38,16 +38,12 @@ class App extends React.Component {
     updateView () {
         let { historyApi, currentView, date } = this.state;
 
-        if (currentView == VIEWS.DAY) {
-            historyApi.getDayVisits(date)
-                .then((visits) => {
-                    console.log("history visits", visits);
-                    this.setState({loading: false, visits});
-                });
-        }
-        else {
-            this.setState({loading: false});
-        }
+        historyApi.getDayVisits(date)
+            .then((visits) => {
+                console.log("history items", historyApi.historyItems);
+                console.log("history visits", historyApi.visits);
+                this.setState({loading: false, visits});
+            });
     }
 
     setView (newView) {
@@ -81,7 +77,7 @@ class App extends React.Component {
 
 
         return (
-            <div>
+            <div className="container">
                 <header>
                     <h1>History</h1>
                 </header>
@@ -102,8 +98,8 @@ class App extends React.Component {
 
                 { loading ? <p>Loading..</p>
                   : currentView == VIEWS.DAY ? <DayView visits={visits}/>
-                  : currentView == VIEWS.WEEK ? <WeekView date={date} historyApi={historyApi}/>
-                  : <MonthView date={date} historyApi={historyApi}/>
+                  : currentView == VIEWS.WEEK ? <WeekView visits={visits}/>
+                  : <MonthView visits={visits}/>
                 }
             </div>
         );

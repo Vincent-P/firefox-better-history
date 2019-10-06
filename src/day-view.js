@@ -3,7 +3,7 @@ import Moment from 'moment';
 
 
 const NoHistory = () => (
-    <div className="website-day">Empty</div>
+    <div className="history-item">Empty</div>
 );
 
 const History = ({visits}) => (
@@ -13,7 +13,7 @@ const History = ({visits}) => (
                 <span>
                     { Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }
                 </span>
-                <img src="/globe.svg"/>
+                <img className="img-icon" src="/globe.svg"/>
                 <span>
                     { visit.title != "" ? visit.title : visit.url }
                 </span>

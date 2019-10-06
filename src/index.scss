@@ -4,7 +4,10 @@ html {
 }
 
 body {
-    margin: calc(#{$base-unit} * 8) auto;
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: calc(#{$base-unit} * 8);
 
     font-family: -apple-system, "Fira Sans", sans-serif;
     background-color: $grey-10;
@@ -14,8 +17,8 @@ body {
     font-weight: 400;
     line-height: 1.8;
 
-    min-height: 100vh;
-    width: 80%;
+    height: 100vh;
+    width: 100vw;
 }
 
 a {
@@ -396,20 +399,60 @@ label {
     }
 }
 
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    height: 100%;
+}
 
 header {
     margin-bottom: calc(#{$base-unit} * 2);
 }
 
-.website-day {
+.img-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* A row representating a website from the history */
+.history-item {
     display: flex;
     align-items: center;
-    column-gap: calc(#{$base-unit} * 2);
+    flex-direction: row;
+    flex-wrap: nowrap;
 
+    column-gap: calc(#{$base-unit} * 2);
     margin: calc(#{$base-unit} * 2) 0;
+
     box-shadow: $shadow-10;
     border-radius: $base-unit;
-    box-sizing: border-box;
     background-color: $white-100;
     padding: $base-unit;
+}
+
+.history-item-url {
+    flex: 1;
+}
+
+/* A container for the columns of the week history */
+.history-week-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+
+    flex: auto;
+    overflow: auto;
+}
+
+.history-week-day {
+    width: 14.29%;
+    overflow-y: auto;
 }
