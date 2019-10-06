@@ -8,16 +8,16 @@ const NoHistory = () => (
 
 const History = ({visits}) => (
     <div>
-        { visits.map(([visit, info]) => (
+        { visits.map(visit => (
             <div className="website-day">
                 <span>
-                    { Moment(visit.visitTime).format("MMMM Do YYYY, h:mm:ss a") }
+                    { Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }
                 </span>
                 <img src="/globe.svg"/>
                 <span>
-                    { info.title != "" ? info.title : info.url }
+                    { visit.title != "" ? visit.title : visit.url }
                 </span>
-                <a href={ info.url } target="_blank" rel="noopener noreferrer">Link</a>
+                <a href={ visit.url } target="_blank" rel="noopener noreferrer">Link</a>
             </div>
         ))}
     </div>

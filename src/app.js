@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import DayView from "day-view";
 import WeekView from "week-view";
 import MonthView from "month-view";
@@ -40,8 +41,7 @@ class App extends React.Component {
         if (currentView == VIEWS.DAY) {
             historyApi.getDayVisits(date)
                 .then((visits) => {
-                    console.log("history items", historyApi.historyItems);
-                    console.log("history visits", historyApi.visits);
+                    console.log("history visits", visits);
                     this.setState({loading: false, visits});
                 });
         }

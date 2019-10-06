@@ -68,37 +68,50 @@ export default class HistoryApi {
      * Return a Promise containing the visits of a day, most recent first
      */
     getDayVisits(today) {
-        const yesterday = today.clone().subtract(1, 'days');
+        // const yesterday = today.clone().subtract(1, 'days');
+        //
+        // return this.updateVisits(yesterday)
+        //     .then((visits) => {
+        //         let today_start = -1;
+        //         let today_end = -1;
+        //
+        //         for (const i in visits) {
+        //             if (today_start == -1 && Moment(visits[i].visitTime).isSame(today, 'day')) {
+        //                 today_start = i;
+        //             }
+        //
+        //             if (today_end == -1 && Moment(visits[i].visitTime).isAfter(today, 'day')) {
+        //                 today_end = i;
+        //                 break;
+        //             }
+        //         }
+        //
+        //         let dayHistory = [];
+        //
+        //         if (today_start != -1) {
+        //             if (today_end != -1) {
+        //                 dayHistory = visits.slice(today_start, today_end);
+        //             }
+        //             else {
+        //                 dayHistory = visits.slice(today_start);
+        //             }
+        //         }
+        //
+        //         return dayHistory.map(visit => [visit, this.getVisitInfos(visit)]).reverse();
+        //     });
 
-        return this.updateVisits(yesterday)
-            .then((visits) => {
-                let today_start = -1;
-                let today_end = -1;
+        const todayStart = Moment(today).startOf('day');
+        const todayEnd = Moment(today).endOf('day');
 
-                for (const i in visits) {
-                    if (today_start == -1 && Moment(visits[i].visitTime).isSame(today, 'day')) {
-                        today_start = i;
-                    }
+        console.log(todayStart.format("MMMM Do YYYY, h:mm:ss a"));
+        console.log(todayEnd.format("MMMM Do YYYY, h:mm:ss a"));
 
-                    if (today_end == -1 && Moment(visits[i].visitTime).isAfter(today, 'day')) {
-                        today_end = i;
-                        break;
-                    }
-                }
-
-                let dayHistory = [];
-
-                if (today_start != -1) {
-                    if (today_end != -1) {
-                        dayHistory = visits.slice(today_start, today_end);
-                    }
-                    else {
-                        dayHistory = visits.slice(today_start);
-                    }
-                }
-
-                return dayHistory.map(visit => [visit, this.getVisitInfos(visit)]).reverse();
-            });
+        return browser.history.search({
+            text: "",
+            startTime: todayStart.toDate(),
+            endTime: todayEnd.toDate(),
+            maxResults: Number.MAX_SAFE_INTEGER
+        });
     }
 
     /**
