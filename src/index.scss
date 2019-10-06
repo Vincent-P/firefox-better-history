@@ -437,7 +437,7 @@ header {
     padding: $base-unit;
 }
 
-.history-item-url {
+.history-item-full {
     flex: 1;
 }
 
@@ -447,6 +447,7 @@ header {
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: stretch;
+    column-gap: calc(#{$base-unit} * 2);
 
     flex: auto;
     overflow: auto;

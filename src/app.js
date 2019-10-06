@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import DayView from "day-view";
 import WeekView from "week-view";
 import MonthView from "month-view";
@@ -28,56 +27,59 @@ class App extends React.Component {
             currentView: VIEWS.WEEK,
             date: Moment(),
             loading: true,
-            historyApi: new HistoryApi(),
             visits: []
         };
-
-        this.updateView();
-    }
-
-    updateView () {
-        let { historyApi, currentView, date } = this.state;
-        let apiPromise = null;
-
-        if (currentView === VIEWS.DAY) {
-            apiPromise = historyApi.getDayVisits(date)
-        } else if (currentView === VIEWS.WEEK) {
-            apiPromise = historyApi.getWeekVisits(date)
-        } else if (currentView === VIEWS.MONTH) {
-            apiPromise = historyApi.getMonthVisits(date)
-        }
-
-        apiPromise
-            .then((visits) => {
-                console.log("history items", historyApi.historyItems);
-                console.log("history visits", historyApi.visits);
-                this.setState({loading: false, visits});
-            });
     }
 
     setView (newView) {
         this.setState({ currentView: newView, date: Moment(), loading: true });
-        this.updateView();
     }
 
     previous () {
         const {currentView, date} = this.state;
         date.subtract(1, VIEW_UNITS[currentView]);
         this.setState({ date, loading: true });
-
-        this.updateView();
     }
 
     next () {
         const {currentView, date} = this.state;
         date.add(1, VIEW_UNITS[currentView]);
         this.setState({ date, loading: true });
-
-        this.updateView();
     }
 
     render() {
-        const { currentView, historyApi, date, loading, visits } = this.state;
+        const { currentView, date, loading, visits } = this.state;
+
+
+        if (loading) {
+            if (currentView === VIEWS.DAY) {
+                HistoryApi.getDayVisits(date)
+                    .then((newVisits) => {
+                        console.log("DAY");
+                        console.log("visits from state", this.state.visits);
+                        console.log("visits", newVisits);
+                        this.setState({loading: false, visits: newVisits});
+                    });
+            }
+            else if (currentView === VIEWS.WEEK) {
+                HistoryApi.getWeekVisits(date)
+                    .then((newVisits) => {
+                        console.log("WEEK");
+                        console.log("visits from state", this.state.visits);
+                        console.log("visits", newVisits);
+                        this.setState({loading: false, visits: newVisits});
+                    });
+            }
+            else if (currentView === VIEWS.MONTH) {
+                HistoryApi.getMonthVisits(date)
+                    .then((newVisits) => {
+                        console.log("MONTH");
+                        console.log("visits from state", this.state.visits);
+                        console.log("visits", newVisits);
+                        this.setState({loading: false, visits: newVisits});
+                    });
+            }
+        }
 
         let selectedDate =
             currentView == VIEWS.DAY ? date.format("Do MMMM YYYY")
@@ -107,8 +109,8 @@ class App extends React.Component {
 
                 { loading ? <p>Loading..</p>
                   : currentView == VIEWS.DAY ? <DayView visits={visits}/>
-                  : currentView == VIEWS.WEEK ? <WeekView visits={visits}/>
-                  : <MonthView visits={visits}/>
+                  : currentView == VIEWS.WEEK ? <WeekView date={date} visits={visits}/>
+                  : <MonthView date={date} visits={visits}/>
                 }
             </div>
         );

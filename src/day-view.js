@@ -19,9 +19,7 @@ const History = ({visits}) => (
                 </div>
 
                 <span className="history-item-url ellipsis-text">
-                    <abbr title={ Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }>
-                        { visit.title != "" ? visit.title : visit.url }
-                    </abbr>
+                    { visit.title != "" ? visit.title : visit.url }
                 </span>
 
                 <div className="history-item-link">
@@ -33,7 +31,7 @@ const History = ({visits}) => (
 );
 
 const DayView = ({visits}) => (
-    visits.length == 0 ? <NoHistory/> : <History visits={visits} />
+    visits.length == 0 ? <NoHistory/> : <History visits={visits[0]} />
 );
 
 export default DayView;
