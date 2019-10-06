@@ -68,50 +68,39 @@ export default class HistoryApi {
      * Return a Promise containing the visits of a day, most recent first
      */
     getDayVisits(today) {
-        // const yesterday = today.clone().subtract(1, 'days');
-        //
-        // return this.updateVisits(yesterday)
-        //     .then((visits) => {
-        //         let today_start = -1;
-        //         let today_end = -1;
-        //
-        //         for (const i in visits) {
-        //             if (today_start == -1 && Moment(visits[i].visitTime).isSame(today, 'day')) {
-        //                 today_start = i;
-        //             }
-        //
-        //             if (today_end == -1 && Moment(visits[i].visitTime).isAfter(today, 'day')) {
-        //                 today_end = i;
-        //                 break;
-        //             }
-        //         }
-        //
-        //         let dayHistory = [];
-        //
-        //         if (today_start != -1) {
-        //             if (today_end != -1) {
-        //                 dayHistory = visits.slice(today_start, today_end);
-        //             }
-        //             else {
-        //                 dayHistory = visits.slice(today_start);
-        //             }
-        //         }
-        //
-        //         return dayHistory.map(visit => [visit, this.getVisitInfos(visit)]).reverse();
-        //     });
-
-        const todayStart = Moment(today).startOf('day');
-        const todayEnd = Moment(today).endOf('day');
-
-        console.log(todayStart.format("MMMM Do YYYY, h:mm:ss a"));
-        console.log(todayEnd.format("MMMM Do YYYY, h:mm:ss a"));
+        const todayStart = Moment(today).startOf('day').toDate();
+        const todayEnd = Moment(today).endOf('day').toDate();
 
         return browser.history.search({
             text: "",
-            startTime: todayStart.toDate(),
-            endTime: todayEnd.toDate(),
+            startTime: todayStart,
+            endTime: todayEnd,
             maxResults: Number.MAX_SAFE_INTEGER
-        });
+        })
+            .then(historyItems => {
+                    const getVisitsPromises = [];
+
+                    for (const historyItem of historyItems) {
+                        getVisitsPromises.push(browser.history.getVisits({ url: historyItem.url })
+                            .then(visitItems => {
+                                // Look for the latest visit item of this day
+                                const todayFirstVisit = visitItems.reverse().find(
+                                    visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
+                                );
+
+                                historyItem.lastVisitTime = todayFirstVisit.visitTime;
+                            })
+                        );
+                    }
+
+                    return Promise.all(getVisitsPromises)
+                        .then(() => {
+                            historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime);
+
+                            return historyItems
+                        });
+                }
+            )
     }
 
     /**
