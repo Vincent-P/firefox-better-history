@@ -4,70 +4,57 @@ export default class HistoryApi {
     /**
      * Return a Promise containing the visits of a day, most recent first
      */
-    static getDayVisits(today) {
+    static async getDayVisits(today) {
         const todayStart = Moment(today).startOf('day').toDate();
         const todayEnd = Moment(today).endOf('day').toDate();
 
-        return browser.history.search({
+        let historyItems = await browser.history.search({
             text: "",
             startTime: todayStart,
             endTime: todayEnd,
             maxResults: Number.MAX_SAFE_INTEGER
-        })
-            .then(historyItems => {
-                const getVisitsPromises = [];
+        });
 
-                for (const historyItem of historyItems) {
-                    getVisitsPromises.push(
-                        browser.history.getVisits({ url: historyItem.url })
-                            .then(visitItems => {
-                                // Look for the latest visit item of this day
-                                const todayFirstVisit = visitItems.reverse().find(
-                                    visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
-                                );
+        for (const historyItem of historyItems) {
+            let visits = await browser.history.getVisits({ url: historyItem.url });
 
-                                historyItem.lastVisitTime = todayFirstVisit.visitTime;
-                                return historyItem;
-                            })
-                    );
-                }
+            // Look for the latest visit item of this day
+            const todayFirstVisit = visits.reverse().find(
+                visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
+            );
 
-                return Promise.all(getVisitsPromises);
-            })
-            .then(historyItems => {
-                return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
-            })
+            historyItem.lastVisitTime = todayFirstVisit.visitTime;
+        }
+
+        return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
     }
 
     /**
      */
-    static getWeekVisits(date) {
+    static async getWeekVisits(date) {
         const dateStart = Moment(date).startOf('week').toDate();
         const dateEnd = Moment(date).endOf('week').toDate();
 
-        return browser.history.search({
+        let historyItems = await browser.history.search({
             text: "",
             startTime: dateStart,
             endTime: dateEnd,
             maxResults: Number.MAX_SAFE_INTEGER
-        })
-            .then(historyItems => {
-                const daysArray = new Array([], [], [], [], [], [], []);
+        });
 
-                for (const historyItem of historyItems) {
-                    daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
-                }
+        const daysArray = new Array([], [], [], [], [], [], []);
 
-                return daysArray;
-            });
+        for (const historyItem of historyItems) {
+            daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+        }
+
+        return daysArray;
     }
 
     /**
      * @param {Date} date a date used to check the month and year of each visits
      */
-    static getMonthVisits(date) {
-        return new Promise((resolve, reject) => {
-            resolve([]);
-        });
+    static async getMonthVisits(date) {
+        return [];
     }
 }
