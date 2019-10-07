@@ -72,7 +72,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { currentView, date, loading, visits } = this.state;
+        const { currentView, date, loading, search } = this.state;
 
         let filteredVisits = [];
         if (loading) {
@@ -104,6 +104,12 @@ class App extends React.Component {
             : currentView == VIEWS.WEEK ?  'Week ' + date.format("w, YYYY")
             : date.format("MMMM, YYYY");
 
+        let clearButtonClasses = "search-button search-button--cancel";
+        if (!search) {
+            clearButtonClasses += " hidden";
+        }
+
+        console.log(filteredVisits);
 
         return (
             <div className="container">
@@ -115,10 +121,11 @@ class App extends React.Component {
                     <input
                         className="default-input search-input"
                         type="text"
+                        value={search}
                         onChange={this.onInputChange.bind(this)}
                         placeholder="Search a website"
                     />
-                    <button className="search-button search-button--cancel" title="Foward"/>
+                    <button className={clearButtonClasses} onClick={() => this.setState({search: ''})} title="Foward"/>
                 </div>
 
                 <div className="toolbar">
