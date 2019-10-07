@@ -28,8 +28,7 @@ class App extends React.Component {
             date: Moment(),
             loading: true,
             search: null,
-            visits: [],
-            filteredVisits: []
+            visits: []
         };
     }
 
@@ -49,38 +48,33 @@ class App extends React.Component {
         this.setState({ date, loading: true });
     }
 
-    getFilteredVisits(search) {
-        const { visits } = this.state;
+    getFilteredVisits() {
+        const { search, visits } = this.state;
 
-        const filteredVisits = search ? [] : visits;
+        if (!search) {
+            return visits;
+        }
 
-        if(search) {
-            for(const visitsArray of visits) {
-                filteredVisits.push(
-                    visitsArray.filter(visit => visit.url.includes(search) || visit.title.includes(search))
-                );
-            }
-            return filteredVisits;
+        const filteredVisits = [];
+
+        for(const visitsArray of visits) {
+            filteredVisits.push(
+                visitsArray.filter(visit => visit.url.toLowerCase().includes(search.toLowerCase()) || visit.title.toLowerCase().includes(search.toLowerCase()))
+            );
         }
 
         return filteredVisits;
     }
 
     onInputChange(event) {
-        const { visits } = this.state;
         const search = event.target.value;
-
         this.setState({ search });
-
-        if (visits) {
-            this.setState({ filteredVisits: this.getFilteredVisits(search) });
-        }
     }
 
     render() {
-        const { currentView, date, loading, filteredVisits } = this.state;
+        const { currentView, date, loading, visits } = this.state;
 
-
+        let filteredVisits = [];
         if (loading) {
             if (currentView === VIEWS.DAY) {
                 HistoryApi.getDayVisits(date)
@@ -100,6 +94,9 @@ class App extends React.Component {
                         this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });
             }
+        }
+        else {
+            filteredVisits = this.getFilteredVisits();
         }
 
         let selectedDate =
@@ -134,9 +131,9 @@ class App extends React.Component {
                 </div>
 
                 { loading ? <div className="spinner"></div>
-                  : currentView == VIEWS.DAY ? <DayView visits={visits}/>
-                  : currentView == VIEWS.WEEK ? <WeekView date={date} visits={visits}/>
-                  : <MonthView date={date} visits={visits}/>
+                  : currentView == VIEWS.DAY ? <DayView visits={filteredVisits}/>
+                  : currentView == VIEWS.WEEK ? <WeekView date={date} visits={filteredVisits}/>
+                  : <MonthView date={date} visits={filteredVisits}/>
                 }
             </div>
         );
