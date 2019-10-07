@@ -98,7 +98,7 @@ class App extends React.Component {
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.MONTH) }>Month</button>
                 </div>
 
-                { loading ? <p>Loading..</p>
+                { loading ? <div className="spinner"></div>
                   : currentView == VIEWS.DAY ? <DayView visits={visits}/>
                   : currentView == VIEWS.WEEK ? <WeekView date={date} visits={visits}/>
                   : <MonthView date={date} visits={visits}/>
