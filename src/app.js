@@ -27,7 +27,9 @@ class App extends React.Component {
             currentView: VIEWS.DAY,
             date: Moment(),
             loading: true,
-            visits: []
+            search: null,
+            visits: [],
+            filteredVisits: []
         };
     }
 
@@ -47,27 +49,55 @@ class App extends React.Component {
         this.setState({ date, loading: true });
     }
 
+    getFilteredVisits(search) {
+        const { visits } = this.state;
+
+        const filteredVisits = search ? [] : visits;
+
+        if(search) {
+            for(const visitsArray of visits) {
+                filteredVisits.push(
+                    visitsArray.filter(visit => visit.url.includes(search) || visit.title.includes(search))
+                );
+            }
+            return filteredVisits;
+        }
+
+        return filteredVisits;
+    }
+
+    onInputChange(event) {
+        const { visits } = this.state;
+        const search = event.target.value;
+
+        this.setState({ search });
+
+        if (visits) {
+            this.setState({ filteredVisits: this.getFilteredVisits(search) });
+        }
+    }
+
     render() {
-        const { currentView, date, loading, visits } = this.state;
+        const { currentView, date, loading, filteredVisits } = this.state;
 
 
         if (loading) {
             if (currentView === VIEWS.DAY) {
                 HistoryApi.getDayVisits(date)
                     .then((newVisits) => {
-                        this.setState({loading: false, visits: newVisits});
+                        this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });
             }
             else if (currentView === VIEWS.WEEK) {
                 HistoryApi.getWeekVisits(date)
                     .then((newVisits) => {
-                        this.setState({loading: false, visits: newVisits});
+                        this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });
             }
             else if (currentView === VIEWS.MONTH) {
                 HistoryApi.getMonthVisits(date)
                     .then((newVisits) => {
-                        this.setState({loading: false, visits: newVisits});
+                        this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });
             }
         }
@@ -85,7 +115,12 @@ class App extends React.Component {
                 </header>
 
                 <div className="search-wrapper center">
-                    <input className="default-input search-input" placeholder="Search a website"/>
+                    <input
+                        className="default-input search-input"
+                        type="text"
+                        onChange={this.onInputChange.bind(this)}
+                        placeholder="Search a website"
+                    />
                     <button className="search-button search-button--cancel" title="Foward"/>
                 </div>
 
