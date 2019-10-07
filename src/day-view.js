@@ -7,7 +7,7 @@ const NoHistory = () => (
 );
 
 const History = ({visits}) => (
-    <div>
+    <div className="history-week-day-items">
         { visits.map(visit => (
             <div className="history-item">
                 <span className="history-item-date">
