@@ -52,34 +52,12 @@ export default class HistoryApi {
             maxResults: Number.MAX_SAFE_INTEGER
         })
             .then(historyItems => {
-                const getVisitsPromises = [];
-
-                for (const historyItem of historyItems) {
-                    getVisitsPromises.push(browser.history.getVisits({ url: historyItem.url })
-                                           .then(visitItems => {
-                                               // Look for the latest visit item of this day
-                                               const todayFirstVisit = visitItems.reverse().find(
-                                                   visitItem => Moment(visitItem.visitTime).isSame(Moment(date), 'week')
-                                               );
-
-                                               historyItem.lastVisitTime = todayFirstVisit.visitTime;
-                                               return historyItem;
-                                           })
-                                          );
-                }
-
-                return Promise.all(getVisitsPromises);
-            })
-            .then(historyItems => {
                 const daysArray = new Array([], [], [], [], [], [], []);
 
                 for (const historyItem of historyItems) {
                     daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
                 }
 
-                daysArray.forEach(day => {
-                    day.sort((a, b) => b.lastVisitTime - a.lastVisitTime);
-                });
                 return daysArray;
             });
     }
