@@ -11,7 +11,7 @@ const History = ({visits}) => (
         { visits.map(visit => (
             <div className="history-item">
                 <span className="history-item-date">
-                    { Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }
+                    { Moment(visit.lastVisitTime).format("h:mm:ss A") }
                 </span>
 
                 <div className="history-item-icon">

@@ -435,7 +435,7 @@ header {
     box-shadow: $shadow-10;
     border-radius: $base-unit;
     background-color: $white-100;
-    padding: $base-unit;
+    padding: $base-unit calc(#{$base-unit} * 2);
 }
 
 .history-item-full {

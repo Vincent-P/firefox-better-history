@@ -24,7 +24,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentView: VIEWS.WEEK,
+            currentView: VIEWS.DAY,
             date: Moment(),
             loading: true,
             visits: []
