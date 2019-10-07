@@ -8,8 +8,16 @@
         "scripts": ["dist/background.js"]
     },
 
+    "icons": {
+        "16": "history.svg",
+        "32": "history.svg",
+        "48": "history.svg",
+        "96": "history.svg"
+    },
+
     "browser_action": {
-        "default_icon": "logo192.png"
+        "default_icon": "history.svg",
+        "default_title": "Better History"
     },
 
     "permissions": [
