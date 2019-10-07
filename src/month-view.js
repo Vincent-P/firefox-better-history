@@ -2,7 +2,7 @@ import React from 'react';
 
 const MonthView = () => (
     <div>
-        <p>TODO</p>
+        <p>TODO :(</p>
     </div>
  );
 

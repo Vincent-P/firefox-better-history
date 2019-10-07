@@ -55,27 +55,18 @@ class App extends React.Component {
             if (currentView === VIEWS.DAY) {
                 HistoryApi.getDayVisits(date)
                     .then((newVisits) => {
-                        console.log("DAY");
-                        console.log("visits from state", this.state.visits);
-                        console.log("visits", newVisits);
                         this.setState({loading: false, visits: newVisits});
                     });
             }
             else if (currentView === VIEWS.WEEK) {
                 HistoryApi.getWeekVisits(date)
                     .then((newVisits) => {
-                        console.log("WEEK");
-                        console.log("visits from state", this.state.visits);
-                        console.log("visits", newVisits);
                         this.setState({loading: false, visits: newVisits});
                     });
             }
             else if (currentView === VIEWS.MONTH) {
                 HistoryApi.getMonthVisits(date)
                     .then((newVisits) => {
-                        console.log("MONTH");
-                        console.log("visits from state", this.state.visits);
-                        console.log("visits", newVisits);
                         this.setState({loading: false, visits: newVisits});
                     });
             }

@@ -7,7 +7,7 @@ const NoHistory = () => (
 );
 
 const History = ({visits}) =>
-     visits.map((visit) => (
+      visits.map((visit) => (
         <div className="history-item">
             <div className="history-item-icon">
                 <img className="img-icon" src="/globe.svg"/>
@@ -28,18 +28,18 @@ const History = ({visits}) =>
 
 const Column = ({date, visits}) => (
     <div className="history-week-day">
-        <div className="history-item">
-
-            <p>{date.format("dddd, MMMM Do YYYY")}</p>
+        <div className="history-week-day-header">
+            <div className="history-item">
+                <p>{date.format("dddd, MMMM Do YYYY")}</p>
+            </div>
         </div>
-        {visits.length == 0 ? <NoHistory/> : <History visits={visits} />}
+        <div className="history-week-day-items">
+            {visits.length == 0 ? <NoHistory/> : <History visits={visits} />}
+        </div>
     </div>
 );
 
 const WeekView = ({visits, date}) => {
-
-    console.log("Week view", visits, date);
-
     let columns = [];
     for (let i = 0; i < 7; i++) {
         columns.push(<Column date={date.clone().add(i, 'days')} visits={visits[i]}/>);

@@ -68,7 +68,6 @@ export default class HistoryApi {
                                           );
                 }
 
-                console.log("promise all");
                 return Promise.all(getVisitsPromises);
             })
             .then(historyItems => {
@@ -81,7 +80,6 @@ export default class HistoryApi {
                 daysArray.forEach(day => {
                     day.sort((a, b) => b.lastVisitTime - a.lastVisitTime);
                 });
-                console.log("daysArray", daysArray);
                 return daysArray;
             });
     }
@@ -90,8 +88,8 @@ export default class HistoryApi {
      * @param {Date} date a date used to check the month and year of each visits
      */
     static getMonthVisits(date) {
-        const monthHistory = [];
-
-        return monthHistory;
+        return new Promise((resolve, reject) => {
+            resolve([]);
+        });
     }
 }

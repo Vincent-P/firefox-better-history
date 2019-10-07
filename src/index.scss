@@ -358,6 +358,7 @@ label {
 .search-wrapper {
     cursor: default;
     display: flex;
+    min-height: 32px;
     height: 32px;
     position: relative;
     width: 736px; // todo
@@ -446,14 +447,25 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: stretch;
-    column-gap: calc(#{$base-unit} * 2);
+    justify-items: center;
+    justify-content: space-between;
+    align-items: stretch; // the columns have full height
 
-    flex: auto;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .history-week-day {
-    width: 14.29%;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    flex: 1 0 0px;
+    min-width: 0;
+}
+
+.history-week-day-header {
+}
+
+.history-week-day-items {
+    overflow-y: scroll;
 }
