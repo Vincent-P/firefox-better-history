@@ -42,7 +42,7 @@ const Column = ({date, visits}) => (
 const WeekView = ({visits, date}) => {
     let columns = [];
     for (let i = 0; i < 7; i++) {
-        columns.push(<Column date={date.clone().add(i, 'days')} visits={visits[i]}/>);
+        columns.push(<Column date={date.clone().weekday(0).add(i, 'days')} visits={visits[i]}/>);
     }
 
     return (
