@@ -450,6 +450,8 @@ header {
     justify-items: center;
     justify-content: space-between;
     align-items: stretch; // the columns have full height
+    column-gap: calc(#{$base-unit} * 2);
+
 
     overflow: hidden;
 }
@@ -467,5 +469,5 @@ header {
 }
 
 .history-week-day-items {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
