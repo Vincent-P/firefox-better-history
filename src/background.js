@@ -1,15 +1,14 @@
-/*
-Open a new tab, and load "index.html" into it.
-*/
 function openMyPage() {
    browser.tabs.create({
      "url": "/index.html"
    });
 }
 
+function onVisited(historyItem) {
+  if (historyItem.url == browser.extension.getURL("./index.html")) {
+    browser.history.deleteUrl({url: historyItem.url});
+  }
+}
 
-/*
-Add openMyPage() as a listener to clicks on the browser action.
-*/
 browser.browserAction.onClicked.addListener(openMyPage);
-openMyPage();
+browser.history.onVisited.addListener(onVisited);

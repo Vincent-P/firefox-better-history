@@ -2,7 +2,7 @@
     "description": "A Better History page inspired by Vivaldi",
     "manifest_version": 2,
     "name": "better-history",
-    "version": "0.1",
+    "version": "0.1.1",
     "homepage_url": "https://github.com/Vincent-P/firefox-better-history",
     "background": {
         "scripts": ["dist/background.js"]
