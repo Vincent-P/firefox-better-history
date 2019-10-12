@@ -7,13 +7,13 @@ body {
     box-sizing: border-box;
 
     margin: 0;
-    padding: calc(#{$base-unit} * 8);
+    padding: calc(var(--base-unit) * 8);
 
     font-family: -apple-system, "Fira Sans", sans-serif;
-    background-color: $grey-10;
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
 
-    color: $grey-90;
-    font-size: 15px;
+    font-size: var(--body-20-size);
     font-weight: 400;
     line-height: 1.8;
 
@@ -22,20 +22,20 @@ body {
 }
 
 a {
-    color: $blue-50;
+    color: var(--blue-50);
     text-decoration: none;
 
     &:hover {
-        color: $blue-60;
+        color: var(--blue-60);
         text-decoration: underline;
     }
 
     &:active {
-        color: $blue-70;
+        color: var(--blue-70);
     }
 
     &:focus {
-        box-shadow: 0 0 0 1px $blue-50, 0 0 0 $base-unit $blue-50-a30;
+        box-shadow: 0 0 0 1px var(--blue-50), 0 0 0 var(--base-unit) var(--blue-50-a30);
     }
 
 
@@ -61,40 +61,40 @@ p, h1 {
 
 /* Typography */
 h1 {
-    font-size: 22px;
+    font-size: var(--title-30-size);
     font-weight: 300;
     line-weight: 1.2;
 
     .display {
-        font-size: 36px;
+        font-size: var(--display-20-size);
         font-weight: 200;
     }
 }
 
 h2 {
-    font-size: 17px;
+    font-size: var(--title-20-size);
     font-weight: 600;
 
-    margin-block: calc(#{$base-unit}) 0;
+    margin-block: calc(var(--base-unit)) 0;
 }
 
 h3 {
-    font-size: 13px;
+    font-size: var(--title-10-size);
     font-weight: 600;
 }
 
 figcaption {
-    font-size: 13px;
+    font-size: var(--caption-20-size);
     font-weight: 400;
-    color: $grey-50;
+    color: var(--grey-50);
 
     .small {
-        font-size: 5px;
+        font-size: var(--caption-10-size);
     }
 }
 
 small {
-    font-size: 11px;
+    font-size: var(--body-10-size);
 }
 
 strong {
@@ -102,15 +102,15 @@ strong {
 }
 
 .primary-icon {
-    color: $grey-90-a80;
+    color: var(--primary-icon-color);
 }
 
 .secondary-icon {
-    color: $grey-90-a60;
+    color: var(--secondary-icon-color);
 }
 
 .secondary-text {
-    color: $grey-50;
+    color: var(--grey-50);
 }
 
 
@@ -129,12 +129,12 @@ strong {
 /* for horizontal rules / separators */
 .separator {
     border-style: solid none none none;
-    border-color: $grey-30;
+    border-color: var(--grey-30);
 }
 
 /* adds breathing space to the separator */
 .separator--breathe {
-    margin: calc(#{$base-unit} * 5) 0;
+    margin: calc(var(--base-unit) * 5) 0;
 }
 
 /* a series of button-like elements, layed out horizontally */
@@ -144,8 +144,8 @@ strong {
     flex-wrap: wrap;
 
     align-items: center;
-    column-gap: calc(#{$base-unit});
-    margin: $base-unit 0;
+    column-gap: calc(var(--base-unit));
+    margin: var(--base-unit 0);
 }
 
 .toolbar--right-align {
@@ -174,13 +174,13 @@ Form controls
 .default-button, .primary-button {
     -moz-appearance: none;
     margin: 0;
-    min-width: calc(#{$base-unit} * 33);
-    height: calc(#{$base-unit} * 8);
-    padding-inline-start: calc(#{$base-unit} * 5);
-    padding-inline-end: calc(#{$base-unit} * 5);
+    min-width: calc(var(--base-unit) * 33);
+    height: calc(var(--base-unit) * 8);
+    padding-inline-start: calc(var(--base-unit) * 5);
+    padding-inline-end: calc(var(--base-unit) * 5);
 
     border: none;
-    border-radius: calc(#{$base-unit} / 2);
+    border-radius: calc(var(--base-unit) / 2);
 
     &:disabled {
         opacity: 0.4;
@@ -188,49 +188,49 @@ Form controls
 
     /* Smaller variant size */
     &--micro {
-        padding-inline-start: calc(2 * #{$base-unit});
-        padding-inline-end: calc(2 * #{$base-unit});
-        font-size: 11px;
+        padding-inline-start: calc(2 * var(--base-unit));
+        padding-inline-end: calc(2 * var(--base-unit));
+        font-size: var(--body-10-size);
         min-width: 0px;
-        height: calc(#{$base-unit} * 6);
+        height: calc(var(--base-unit) * 6);
     }
 
     /* Bigger variant size */
     &--puffy {
-        padding-inline-start: calc(4 * #{$base-unit});
-        padding-inline-end: calc(4 * #{$base-unit});
-        font-size: 15px;
+        padding-inline-start: calc(4 * var(--base-unit));
+        padding-inline-end: calc(4 * var(--base-unit));
+        font-size: var(--body-20-size);
         min-width: 0px;
-        height: calc(#{$base-unit} * 12);
-        border-radius: #{$base-unit};
+        height: calc(var(--base-unit) * 12);
+        border-radius: var(--base-unit);
     }
 }
 
 /* Photon button representing a primary action */
 .primary-button {
-    color: $white-100;
-    background-color: $blue-60;
+    color: var(--white-100);
+    background-color: var(--primary-button-background-color);
 
     &:enabled:hover {
-        background-color: $blue-70;
+        background-color: var(--primary-button-hover-background-color);
     }
 
     &:enabled:active {
-        background-color: $blue-80;
+        background-color: var(--primary-button-active-background-color);
     }
 }
 
 /* Photon standard button */
 .default-button {
-    color: $grey-90;
-    background-color: $grey-90-a10;
+    color: var(--primary-text-color);
+    background-color: var(--default-button-background-color);
 
     &:enabled:hover {
-        background: $grey-90-a20;
+        background-color: var(--default-button-hover-background-color);
     }
 
     &:enabled:active {
-        background: $grey-90-a30;
+        background-color: var(--default-button-active-background-color);
     }
 }
 
@@ -238,59 +238,60 @@ Form controls
 .ghost-button {
     background: transparent;
     border: none;
-    border-radius: calc(#{$base-unit} / 2);
-    fill: $grey-90-a80;
-    height: calc(#{$base-unit} * 6);
-    padding: $base-unit;
-    width: calc(#{$base-unit} * 6);
+    border-radius: calc(var(--base-unit) / 2);
+    fill: var(--primary-icon-color);
+    height: calc(var(--base-unit) * 6);
+    padding: var(--base-unit);
+    width: calc(var(--base-unit) * 6);
 
     -moz-context-properties: fill;
 
     &:hover {
-        background-color: $grey-30;
+        background-color: var(--default-button-background-color);
     }
 
     &:active {
-        background-color: $grey-40;
+        background-color: var(--default-button-hover-background-color);
     }
 }
 
 /* Standard inputs */
 .default-input {
     line-height: unset;
-    padding: 0 calc(#{$base-unit} * 2);
-    height: calc(#{$base-unit} * 8);
-    margin: $base-unit 0;
+    padding: 0 calc(var(--base-unit) * 2);
+    height: calc(var(--base-unit) * 8);
+    margin: var(--base-unit 0);
 
-    border: 1px solid $grey-30;
-    border-radius: calc(#{$base-unit} / 2);
-    border-color: $grey-90-a20;
+    color: var(--primary-text-color);
 
-    color: $grey-90;
+    border: 1px solid var(--grey-30);
+    border-radius: calc(var(--base-unit) / 2);
+    border-color: var(--default-input-border-color);
+
     font-size: 0.833rem;
-    background-color: $white-100;
+    background-color: var(--default-input-background-color);
 
     ::placeholder {
-        color: $grey-50;
+        color: var(--grey-50);
     }
 
     &:hover {
-        border-color: $grey-90-a30;
+        border-color: var(--default-input-hover-border-color);
     }
 
     &:focus {
-        border-color: $blue-50;
-        box-shadow: 0 0 0 1px $blue-50, 0 0 0 $base-unit $blue-50-a30;
+        border-color: var(--blue-50);
+        box-shadow: 0 0 0 1px var(--blue-50), 0 0 0 var(--base-unit) var(--blue-50-a30);
     }
 
     .warning {
-        border-color: $yellow-60;
-        box-shadow: 0 0 0 1px $yellow-60, 0 0 0 $base-unit $yellow-60-a30;
+        border-color: var(--yellow-60);
+        box-shadow: 0 0 0 1px var(--yellow-60), 0 0 0 var(--base-unit) var(--yellow-60-a30);
     }
 
     &:invalid, .error {
-        border-color: $red-60;
-        box-shadow: 0 0 0 1px $red-60, 0 0 0 $base-unit $red-60-a30;
+        border-color: var(--red-60);
+        box-shadow: 0 0 0 1px var(--red-60), 0 0 0 var(--base-unit) var(--red-60-a30);
     }
 }
 
@@ -299,9 +300,8 @@ input, label {
 }
 
 label {
-    color: $grey-90;
     font-size: 0.833rem;
-    margin-bottom: calc(#{$base-unit} * 2);
+    margin-bottom: calc(var(--base-unit) * 2);
 }
 
 /*
@@ -313,17 +313,17 @@ label {
  * NOTE: styles borrowed from Photon's micro buttons (there aren't badges)
  */
 .badge {
-    background: $grey-30;
-    border-radius: calc(#{$base-unit} / 2);
-    font-size: 11px;
-    padding: $base-unit calc(2 * #{$base-unit});
+    background: var(--grey-30);
+    border-radius: calc(var(--base-unit) / 2);
+    font-size: var(--body-10-size);
+    padding: var(--base-unit) calc(2 * var(--base-unit));
 
     &--info {
-        background: $blue-50;
+        background: var(--blue-50);
     }
 
     &--success {
-        background: $green-50;
+        background: var(--green-50);
     }
 
     &--warning {
@@ -332,23 +332,6 @@ label {
 
     &--error {
         background: #fdf2f5;
-    }
-}
-
-/*
- * Card UI, from Photon
- */
-.card {
-    background-color: $white-100;
-    border-radius: $base-unit;
-    box-shadow: 0 1px 4px $grey-90-a10;
-    box-sizing: border-box;
-    min-width: min-content;
-    padding-block: calc(#{$base-unit} * 5);
-
-    &__heading {
-        font-size: 17px; /* Note: this is from Photon Title 20 */
-        font-weight: 600; /* Note: this is from Photon Title 20 */
     }
 }
 
@@ -362,7 +345,7 @@ label {
     height: 32px;
     position: relative;
     width: 736px; // todo
-    margin: calc(#{$base-unit} * 2) 0;
+    margin: calc(var(--base-unit) * 2) 0;
 }
 
 .search-input {
@@ -370,13 +353,8 @@ label {
     height: 100%;
     padding: 0;
     margin: 0;
-    padding-inline-start: calc(#{$base-unit} * 2);
-    padding-inline-end: calc(#{$base-unit} * 8);
-}
-
-@mixin background-icon($svg) {
-    background: url($svg) no-repeat center center;
-    background-size: 16px 16px;
+    padding-inline-start: calc(var(--base-unit) * 2);
+    padding-inline-end: calc(var(--base-unit) * 8);
 }
 
 .search-button {
@@ -388,15 +366,12 @@ label {
     position: absolute;
     width: 32px;
     -moz-context-properties: fill;
-    fill: $grey-90;
+    fill: var(--icon-fill-color);
     opacity: 60%;
 
-    &--forward {
-        @include background-icon("chrome://browser/skin/forward.svg");
-    }
-
     &--cancel {
-        @include background-icon("/search-cancel.svg");
+        background: var(--background-cancel-icon);
+        background-size: 16px 16px;
     }
 }
 
@@ -414,7 +389,11 @@ label {
 }
 
 header {
-    margin-bottom: calc(#{$base-unit} * 2);
+    margin-bottom: calc(var(--base-unit) * 2);
+}
+
+img {
+    vertical-align: middle;
 }
 
 .img-icon {
@@ -429,13 +408,13 @@ header {
     flex-direction: row;
     flex-wrap: nowrap;
 
-    column-gap: calc(#{$base-unit} * 2);
-    margin: calc(#{$base-unit} * 2) 0;
+    column-gap: calc(var(--base-unit) * 2);
+    margin: calc(var(--base-unit) * 2) 0;
 
-    box-shadow: $shadow-10;
-    border-radius: $base-unit;
-    background-color: $white-100;
-    padding: $base-unit calc(#{$base-unit} * 2);
+    box-shadow: var(--shadow-10);
+    border-radius: var(--base-unit);
+    background-color: var(--card-background-color);
+    padding: var(--base-unit) calc(var(--base-unit) * 2);
 }
 
 .history-item-full {
@@ -450,7 +429,7 @@ header {
     justify-items: center;
     justify-content: space-between;
     align-items: stretch; // the columns have full height
-    column-gap: calc(#{$base-unit} * 2);
+    column-gap: calc(var(--base-unit) * 2);
 
 
     overflow: hidden;

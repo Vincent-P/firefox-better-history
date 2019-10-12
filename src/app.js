@@ -3,6 +3,7 @@ import React from 'react';
 import DayView from "day-view";
 import WeekView from "week-view";
 import MonthView from "month-view";
+import Icon from 'icon';
 
 import Moment from "moment";
 import HistoryApi from "history-api";
@@ -130,8 +131,8 @@ class App extends React.Component {
 
                 <div className="toolbar">
                     <h2>{ selectedDate }</h2>
-                    <button className="toolbar-item-right ghost-button" onClick={ () => this.previous() }><img src="/back.svg"/></button>
-                    <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><img src="/forward.svg"/></button>
+                    <button className="toolbar-item-right ghost-button" onClick={ () => this.previous() }><Icon src="back"/></button>
+                    <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><Icon src="forward"/></button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.DAY) }>Day</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.WEEK) }>Week</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.MONTH) }>Month</button>

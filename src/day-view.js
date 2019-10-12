@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'moment';
+import Icon from 'icon';
 
 
 const NoHistory = () => (
@@ -15,7 +16,7 @@ const History = ({visits}) => (
                 </span>
 
                 <div className="history-item-icon">
-                    <img className="img-icon" src="/globe.svg"/>
+                    <Icon className="img-icon" src="globe"/>
                 </div>
 
                 <span className="history-item-url ellipsis-text">
