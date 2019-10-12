@@ -110,8 +110,6 @@ class App extends React.Component {
             clearButtonClasses += " hidden";
         }
 
-        console.log(filteredVisits);
-
         return (
             <div className="container">
                 <header>

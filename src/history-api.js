@@ -23,7 +23,10 @@ export default class HistoryApi {
                 visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
             );
 
-            historyItem.lastVisitTime = todayFirstVisit.visitTime;
+            // Sometimes there aren't any visits (during first load usually)
+            if (todayFirstVisit) {
+                historyItem.lastVisitTime = todayFirstVisit.visitTime;
+            }
         }
 
         return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
