@@ -1,6 +1,7 @@
 @import 'variables';
 
 html {
+    scrollbar-width: thin;
 }
 
 body {
@@ -344,7 +345,10 @@ label {
     min-height: 32px;
     height: 32px;
     position: relative;
+
     width: 736px; // todo
+    max-width: 90%;
+
     margin: calc(var(--base-unit) * 2) 0;
 }
 
@@ -421,16 +425,16 @@ img {
     flex: 1;
 }
 
+.history-item-date {
+}
+
 /* A container for the columns of the week history */
 .history-week-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-items: center;
-    justify-content: space-between;
-    align-items: stretch; // the columns have full height
-    column-gap: calc(var(--base-unit) * 2);
+    display: grid;
+    // seven equal columns
+    grid-template-columns: repeat(7, 1fr [col-start]);
 
+    grid-column-gap: var(--base-unit);
 
     overflow: hidden;
 }
@@ -442,6 +446,8 @@ img {
 
     flex: 1 0 0px;
     min-width: 0;
+
+    overflow: hidden;
 }
 
 .history-week-day-header {
@@ -449,6 +455,42 @@ img {
 
 .history-week-day-items {
     overflow-y: auto;
+    scrollbar-color: var(--default-button-background-color) transparent;
+    scrollbar-width: thin;
+}
+
+
+/* A container for the days of the month history */
+.history-month-container {
+    display: grid;
+    // seven equal columns
+    grid-template-columns: repeat(7, 1fr [col-start]);
+    // five equal rows
+    grid-template-rows: repeat(5, 1fr [row-start]);
+
+    grid-column-gap: var(--base-unit);
+    grid-row-gap: var(--base-unit);
+
+    overflow: hidden;
+}
+
+.history-month-day {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    flex: 1 0 0px;
+    min-width: 0;
+    overflow-y: hidden;
+}
+
+.history-month-day-header {
+}
+
+.history-month-day-items {
+    overflow-y: auto;
+    scrollbar-color: var(--default-button-background-color) transparent;
+    scrollbar-width: thin;
 }
 
 .spinner::before {
@@ -475,4 +517,8 @@ img {
 
 .hidden {
     visibility: hidden;
+}
+
+.disabled {
+    opacity: 0.4;
 }

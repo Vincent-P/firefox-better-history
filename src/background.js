@@ -14,4 +14,4 @@ browser.browserAction.onClicked.addListener(openMyPage);
 browser.history.onVisited.addListener(onVisited);
 
 // dev only
-openMyPage();
+//openMyPage();

@@ -35,8 +35,8 @@ export default class HistoryApi {
     /**
      */
     static async getWeekVisits(date) {
-        const dateStart = Moment(date).startOf('week').toDate();
-        const dateEnd = Moment(date).endOf('week').toDate();
+        const dateStart = date.clone().startOf('week').toDate();
+        const dateEnd = date.clone().endOf('week').toDate();
 
         let historyItems = await browser.history.search({
             text: "",
@@ -58,6 +58,31 @@ export default class HistoryApi {
      * @param {Date} date a date used to check the month and year of each visits
      */
     static async getMonthVisits(date) {
-        return [];
+        const firstDayOfMonth = date.clone().startOf('month');
+        const firstDayOfWeekBeforeMonth = firstDayOfMonth.startOf('week');
+        // dont use firstDayOfMonth anymore
+
+        const dateStart = firstDayOfWeekBeforeMonth;
+        const dateEnd = dateStart.clone().add(34, 'days');
+
+        let historyItems = await browser.history.search({
+            text: "",
+            startTime: dateStart.toDate(),
+            endTime: dateEnd.toDate(),
+            maxResults: Number.MAX_SAFE_INTEGER
+        });
+
+        const daysArray = [];
+        for (let i = 0; i < 35; i++) {
+            daysArray.push([]);
+        }
+
+        for (const historyItem of historyItems) {
+            const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+            daysArray[idx].push(historyItem);
+        }
+
+        console.log("month history:", daysArray);
+        return daysArray;
     }
 }

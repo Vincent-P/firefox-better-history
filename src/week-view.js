@@ -4,7 +4,7 @@ import Moment from 'moment';
 import Icon from 'icon';
 
 const NoHistory = () => (
-    <div className="history-item">Empty</div>
+    <div></div>
 );
 
 const History = ({visits}) =>
