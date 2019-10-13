@@ -79,6 +79,8 @@ export default class HistoryApi {
 
         for (const historyItem of historyItems) {
             const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+            if (idx < 0 || idx >= 35)
+                continue;
             daysArray[idx].push(historyItem);
         }
 
