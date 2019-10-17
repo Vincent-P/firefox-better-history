@@ -426,6 +426,11 @@ img {
 }
 
 .history-item-date {
+    min-width: max-content;
+}
+
+.history-item-link {
+    min-width: max-content;
 }
 
 /* A container for the columns of the week history */
