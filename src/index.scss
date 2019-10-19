@@ -426,7 +426,11 @@ img {
 }
 
 .history-item-date {
-    min-width: max-content;
+    min-width: 75px;
+
+    @media screen and (max-width: $midscreen-max-width)  {
+        min-width: 65px;
+    }
 }
 
 .history-item-link {

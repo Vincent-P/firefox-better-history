@@ -1,3 +1,5 @@
+$midscreen-max-width: 1400px;
+
 :root {
     /* Colors */
     --magenta-50: #ff1ad9;
@@ -103,7 +105,7 @@
     --title-10-size: 13px;
 
 
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: $midscreen-max-width)  {
         --caption-10-size: 9px;
         --title-10-size: 11px;
     }
