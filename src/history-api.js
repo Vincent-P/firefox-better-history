@@ -84,7 +84,6 @@ export default class HistoryApi {
             daysArray[idx].push(historyItem);
         }
 
-        console.log("month history:", daysArray);
         return daysArray;
     }
 }
