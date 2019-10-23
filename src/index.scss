@@ -419,6 +419,12 @@ img {
     border-radius: var(--base-unit);
     background-color: var(--card-background-color);
     padding: var(--base-unit) calc(var(--base-unit) * 2);
+    &:hover {
+        background-color: var(--ghost-button-hover-background-color);
+        @media (prefers-color-scheme: dark) {
+            background-color: var(--default-button-hover-background-color);
+        }
+    }
 }
 
 .history-item-full {
