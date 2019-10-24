@@ -23,16 +23,16 @@ body {
 }
 
 a {
-    color: var(--blue-50);
+    color: var(--link-color);
     text-decoration: none;
 
     &:hover {
-        color: var(--blue-60);
+        color: var(--link-hover-color);
         text-decoration: underline;
     }
 
     &:active {
-        color: var(--blue-70);
+        color: var(--link-active-color);
     }
 
     &:focus {
@@ -42,7 +42,7 @@ a {
 
     // display icon for external links
     &:not([class])[href*="//"]::after {
-        background-image: url(/open-in-new.svg);
+        background-image: var(--link-external-icon);
         background-repeat: no-repeat;
         background-size: 16px 16px;
         content: "";
@@ -420,7 +420,7 @@ img {
     background-color: var(--card-background-color);
     padding: var(--base-unit) calc(var(--base-unit) * 2);
     &:hover {
-        background-color: var(--ghost-button-hover-background-color);
+        background-color: var(--default-button-background-color);
         @media (prefers-color-scheme: dark) {
             background-color: var(--default-button-hover-background-color);
         }
