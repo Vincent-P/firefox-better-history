@@ -8,7 +8,8 @@ body {
     box-sizing: border-box;
 
     margin: 0;
-    padding: calc(var(--base-unit) * 8);
+
+    padding: calc(var(--base-unit) * 4) calc(var(--base-unit) * 8);
 
     font-family: -apple-system, "Fira Sans", sans-serif;
     background-color: var(--background-color);
@@ -20,6 +21,10 @@ body {
 
     height: 100vh;
     width: 100vw;
+
+    @media screen and (max-width: $midscreen-max-width)  {
+        padding: calc(var(--base-unit) * 2) calc(var(--base-unit) * 4);
+    }
 }
 
 a {
@@ -149,12 +154,20 @@ strong {
     margin: var(--base-unit 0);
 }
 
-.toolbar--right-align {
-    justify-content: end;
+.align-right {
+    margin-left: auto;
 }
 
-.toolbar h2 {
-    margin-right: auto;
+.toolbar h1 {
+    min-width: 200px;
+    text-align: center;
+    @media screen and (max-width: $midscreen-max-width)  {
+        min-width: 150px;
+    }
+}
+
+.fullwidth {
+    width: 100% !important;
 }
 
 .center {
@@ -346,8 +359,9 @@ label {
     height: 32px;
     position: relative;
 
-    width: 736px; // todo
-    max-width: 90%;
+    min-width: 200px;
+    max-width: 736px;
+    flex: 1 0px;
 
     margin: calc(var(--base-unit) * 2) 0;
 }
