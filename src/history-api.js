@@ -1,5 +1,9 @@
 import Moment from "moment";
 
+function capitalize(word) {
+    return word.charAt(0).toLocaleUpperCase() + word.slice(1);
+}
+
 export default class HistoryApi {
     /**
      * Return a Promise containing the visits of a day, most recent first
@@ -85,5 +89,35 @@ export default class HistoryApi {
         }
 
         return daysArray;
+    }
+
+    static formatDayHeader(date) {
+        const day_number = date.format('Do');
+        const month = date.format('MMMM');
+        const year = date.format('YYYY');
+
+        return `${day_number} ${capitalize(month)} ${year}`;
+    }
+
+    static formatWeekHeader(date) {
+        const week = 'Week';
+        const week_number = date.format('w');
+        const year = date.format('YYYY');
+        return `${week} ${week_number}, ${year}`;
+    }
+
+    static formatMonthHeader(date) {
+        const month = date.format('MMMM');
+        const year = date.format('YYYY');
+
+        return `${capitalize(month)} ${year}`;
+    }
+
+    static formatHistoryItem(date) {
+        const day = date.format('dddd');
+        const day_number = date.format('Do');
+        const month = date.format('MMMM');
+
+        return `${capitalize(day)} ${day_number} ${capitalize(month)}`;
     }
 }

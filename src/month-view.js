@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'moment';
+import HistoryApi from "history-api";
 
 import Icon from 'icon';
 
@@ -37,7 +38,7 @@ const GridItem = ({date, visits, sameMonth}) => {
         <div className={classes}>
             <div className="history-day-header">
                 <div className="history-item">
-                    <p>{date.format("dddd, MMMM Do YYYY")}</p>
+                    <p>{HistoryApi.formatHistoryItem(date)}</p>
                 </div>
             </div>
             <div className="history-month-day-items">
@@ -48,6 +49,10 @@ const GridItem = ({date, visits, sameMonth}) => {
 };
 
 const MonthView = ({visits, date}) => {
+    if (!visits || !date) {
+        return <div>{'Something went wrong :('}</div>;
+    }
+
     const firstDayOfMonth = date.clone().startOf('month');
     const firstDayOfWeekBeforeMonth = firstDayOfMonth.startOf('week');
     // dont use firstDayOfMonth anymore

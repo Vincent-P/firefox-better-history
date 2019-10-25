@@ -1,12 +1,11 @@
 import React from 'react';
+import Moment from "moment";
+import HistoryApi from "history-api";
 
 import DayView from "day-view";
 import WeekView from "week-view";
 import MonthView from "month-view";
 import Icon from 'icon';
-
-import Moment from "moment";
-import HistoryApi from "history-api";
 
 const VIEWS = {
     DAY: 0,
@@ -25,7 +24,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentView: VIEWS.DAY,
+            currentView: VIEWS.WEEK,
             date: Moment(),
             loading: true,
             search: null,
@@ -101,9 +100,9 @@ class App extends React.Component {
         }
 
         let selectedDate =
-            currentView == VIEWS.DAY ? date.format("Do MMMM YYYY")
-            : currentView == VIEWS.WEEK ?  'Week ' + date.format("w, YYYY")
-            : date.format("MMMM, YYYY");
+            currentView == VIEWS.DAY ? HistoryApi.formatDayHeader(date)
+            : currentView == VIEWS.WEEK ?  HistoryApi.formatWeekHeader(date)
+            : HistoryApi.formatMonthHeader(date);
 
         let clearButtonClasses = "search-button search-button--cancel";
         if (!search) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'moment';
+import HistoryApi from "history-api";
 
 import Icon from 'icon';
 
@@ -31,7 +32,7 @@ const Column = ({date, visits}) => (
     <div className="history-week-day">
         <div className="history-day-header">
             <div className="history-item">
-                <p>{date.format("dddd, MMMM Do YYYY")}</p>
+                <p>{HistoryApi.formatHistoryItem(date)}</p>
             </div>
         </div>
         <div className="history-week-day-items">
@@ -41,6 +42,10 @@ const Column = ({date, visits}) => (
 );
 
 const WeekView = ({visits, date}) => {
+    if (!visits || !date) {
+        return <div>{'Something went wrong :('}</div>;
+    }
+
     let columns = [];
     for (let i = 0; i < 7; i++) {
         columns.push(<Column date={date.clone().weekday(0).add(i, 'days')} visits={visits[i]}/>);

@@ -32,7 +32,7 @@ const History = ({visits}) => (
 );
 
 const DayView = ({visits}) => (
-    !visits.length || !visits[0].length ? <NoHistory/> : <History visits={visits[0]} />
+    !visits || !visits.length || !visits[0].length ? <NoHistory/> : <History visits={visits[0]} />
 );
 
 export default DayView;
