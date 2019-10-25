@@ -14,7 +14,7 @@ const History = ({visits}) =>
                 <Icon className="img-icon" src="globe"/>
             </div>
 
-            <span className="history-item-url history-item-full ellipsis-text">
+            <span className="history-item-url history-item--full ellipsis-text">
                 <abbr title={ 'Last visit: ' + Moment(visit.lastVisitTime).format("MMMM Do YYYY, h:mm:ss a") }>
                     { visit.title != "" ? visit.title : visit.url }
                 </abbr>
@@ -29,7 +29,7 @@ const History = ({visits}) =>
 
 const Column = ({date, visits}) => (
     <div className="history-week-day">
-        <div className="history-week-day-header">
+        <div className="history-day-header">
             <div className="history-item">
                 <p>{date.format("dddd, MMMM Do YYYY")}</p>
             </div>

@@ -57,6 +57,7 @@ $midscreen-max-width: 1400px;
     --orange-90: #3e1300;
 
     --grey-10: #f9f9fa;
+    --grey-10-a05: rgba(249, 249, 250, 0.05);
     --grey-10-a10: rgba(249, 249, 250, 0.1);
     --grey-10-a15: rgba(249, 249, 250, 0.15);
     --grey-10-a20: rgba(249, 249, 250, 0.2);
@@ -126,6 +127,7 @@ $midscreen-max-width: 1400px;
     --primary-text-color: var(--grey-90);
     --secondary-text-color: var(--grey-50);
 
+    --card-header-background-color: var(--grey-90-a10);
     --card-background-color: var(--white-100);
 
     --primary-button-background-color: var(--blue-60);
@@ -158,6 +160,7 @@ $midscreen-max-width: 1400px;
         --primary-text-color: var(--grey-10);
         --secondary-text-color: var(--grey-10);
 
+        --card-header-background-color: var(--grey-10-a05);
         --card-background-color: var(--grey-10-a10);
 
         --primary-button-background-color: var(--blue-60);
