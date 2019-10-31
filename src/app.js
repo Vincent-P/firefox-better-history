@@ -23,8 +23,13 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
+        let currentView = props.defaultView;
+        if (currentView == null || currentView == undefined) {
+            currentView = VIEWS.WEEK;
+        }
+
         this.state = {
-            currentView: VIEWS.WEEK,
+            currentView,
             date: Moment(),
             loading: true,
             search: null,
@@ -33,6 +38,7 @@ class App extends React.Component {
     }
 
     setView (newView) {
+        browser.storage.local.set({last_visited: newView});
         this.setState({ currentView: newView, date: Moment(), loading: true });
     }
 
