@@ -16,7 +16,7 @@ const History = ({visits}) => (
                 </span>
 
                 <div className="history-item-icon">
-                    <Icon className="img-icon" src="globe"/>
+                    <Icon className="img-icon" default="globe" faviconUrl={ visit.url }/>
                 </div>
 
                 <span className="history-item-url ellipsis-text">

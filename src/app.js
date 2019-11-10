@@ -131,8 +131,8 @@ class App extends React.Component {
                         <button className={clearButtonClasses} onClick={() => this.setState({search: ''})} title="Clear"/>
                     </div>
 
-                    <button className="toolbar-item-right ghost-button align-right" onClick={ () => this.previous() }><Icon src="back"/></button>
-                    <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><Icon src="forward"/></button>
+                    <button className="toolbar-item-right ghost-button align-right" onClick={ () => this.previous() }><Icon default="back"/></button>
+                    <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><Icon default="forward"/></button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.DAY) }>Day</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.WEEK) }>Week</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.MONTH) }>Month</button>

@@ -12,7 +12,7 @@ const History = ({visits}) =>
       visits.map((visit) => (
         <div className="history-item">
             <div className="history-item-icon">
-                <Icon className="img-icon" src="globe"/>
+                <Icon className="img-icon" default="globe" faviconUrl={visit.url}/>
             </div>
 
             <span className="history-item-url history-item--full ellipsis-text">
