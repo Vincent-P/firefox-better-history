@@ -28,10 +28,10 @@ const History = ({visits}) =>
     ))
 ;
 
-const Column = ({date, visits}) => (
+const Column = ({date, visits, viewDay}) => (
     <div className="history-week-day">
         <div className="history-day-header">
-            <div className="history-item">
+            <div className="history-item" onClick={() => viewDay(date)}>
                 <p>{HistoryApi.formatHistoryItem(date)}</p>
             </div>
         </div>
@@ -41,14 +41,14 @@ const Column = ({date, visits}) => (
     </div>
 );
 
-const WeekView = ({visits, date}) => {
+const WeekView = ({visits, date, viewDay}) => {
     if (!visits || !date) {
         return <div>{'Something went wrong :('}</div>;
     }
 
     let columns = [];
     for (let i = 0; i < 7; i++) {
-        columns.push(<Column date={date.clone().weekday(0).add(i, 'days')} visits={visits[i]}/>);
+        columns.push(<Column date={date.clone().weekday(0).add(i, 'days')} visits={visits[i]} viewDay={viewDay}/>);
     }
 
     return (

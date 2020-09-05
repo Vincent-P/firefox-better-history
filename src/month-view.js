@@ -28,7 +28,7 @@ const History = ({visits}) =>
     ))
 ;
 
-const GridItem = ({date, visits, sameMonth}) => {
+const GridItem = ({date, visits, sameMonth, viewDay}) => {
     let classes = "history-month-day";
     if (!sameMonth) {
         classes += " disabled";
@@ -37,7 +37,7 @@ const GridItem = ({date, visits, sameMonth}) => {
     return (
         <div className={classes}>
             <div className="history-day-header">
-                <div className="history-item">
+                <div className="history-item" onClick={() => viewDay(date)}>
                     <p>{HistoryApi.formatHistoryItem(date)}</p>
                 </div>
             </div>
@@ -48,7 +48,7 @@ const GridItem = ({date, visits, sameMonth}) => {
     );
 };
 
-const MonthView = ({visits, date}) => {
+const MonthView = ({visits, date, viewDay}) => {
     if (!visits || !date) {
         return <div>{'Something went wrong :('}</div>;
     }
@@ -60,7 +60,7 @@ const MonthView = ({visits, date}) => {
     let days = [];
     for (let i = 0; i < 35; i++) {
         const day = firstDayOfWeekBeforeMonth.clone().add(i, 'days');
-        days.push(<GridItem date={day} visits={visits[i]} sameMonth={day.isSame(date, 'month')}/>);
+        days.push(<GridItem date={day} visits={visits[i]} sameMonth={day.isSame(date, 'month')} viewDay={viewDay}/>);
     }
 
     return (
