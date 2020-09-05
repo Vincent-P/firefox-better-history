@@ -54,6 +54,11 @@ class App extends React.Component {
         this.setState({ date, loading: true });
     }
 
+    viewDay(targetDate) {
+        this.setView(VIEWS.DAY);
+        this.setState( { date: targetDate, loading: true });
+    }
+
     getFilteredVisits() {
         const { search, visits } = this.state;
 
@@ -140,8 +145,8 @@ class App extends React.Component {
 
                 { loading ? <div className="spinner"></div>
                   : currentView == VIEWS.DAY ? <DayView visits={filteredVisits}/>
-                  : currentView == VIEWS.WEEK ? <WeekView date={date} visits={filteredVisits}/>
-                  : <MonthView date={date} visits={filteredVisits}/>
+                  : currentView == VIEWS.WEEK ? <WeekView date={date} visits={filteredVisits} viewDay={this.viewDay.bind(this)}/>
+                  : <MonthView date={date} visits={filteredVisits} viewDay={this.viewDay.bind(this)}/>
                 }
             </div>
         );
