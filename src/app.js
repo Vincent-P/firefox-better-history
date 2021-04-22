@@ -105,7 +105,7 @@ class App extends React.Component {
                     });
             }
             else if (currentView === VIEWS.WEEK) {
-                HistoryApi.getWeekVisits(date)
+                HistoryApi.getWeekVisits(date, repeatedVisits)
                     .then((newVisits) => {
                         this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });

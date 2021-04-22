@@ -53,7 +53,7 @@ export default class HistoryApi {
 
     /**
      */
-    static async getWeekVisits(date) {
+    static async getWeekVisits(date, repeatedVisits) {
         const dateStart = date.clone().startOf('week').toDate();
         const dateEnd = date.clone().endOf('week').toDate();
 
@@ -66,8 +66,22 @@ export default class HistoryApi {
 
         const daysArray = new Array([], [], [], [], [], [], []);
 
-        for (const historyItem of historyItems) {
-            daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+        if (repeatedVisits) {
+            for (const historyItem of historyItems) {
+                let visits = await browser.history.getVisits({ url: historyItem.url });
+                // add all separate visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        daysArray[Moment(newHistoryItem.lastVisitTime).weekday()].push(newHistoryItem);
+                    }
+                }
+            }
+        } else {
+            for (const historyItem of historyItems) {
+                daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+            }
         }
 
         return daysArray;
