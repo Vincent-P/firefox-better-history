@@ -26,7 +26,9 @@ export default class HistoryApi {
             if (repeatedVisits) {
                 // add all separately visits
                 for (const visit of visits) {
-                    if (visit.visitTime !== undefined) {
+                    if (visit.visitTime !== undefined
+                        && Moment(visit.visitTime).isAfter(todayStart)
+                        && Moment(visit.visitTime).isBefore(todayEnd)) {
                         // create new HistoryItem's with different lastVisitTime
                         var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
                         allHistoryItems.push(newHistoryItem);
@@ -68,13 +70,19 @@ export default class HistoryApi {
 
         if (repeatedVisits) {
             for (const historyItem of historyItems) {
-                let visits = await browser.history.getVisits({ url: historyItem.url });
-                // add all separate visits
-                for (const visit of visits) {
-                    if (visit.visitTime !== undefined) {
-                        // create new HistoryItem's with different lastVisitTime
-                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
-                        daysArray[Moment(newHistoryItem.lastVisitTime).weekday()].push(newHistoryItem);
+                if (historyItem.visitCount == 1){ // then add the one historyItem
+                  daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+                } else {
+                    let visits = await browser.history.getVisits({ url: historyItem.url });
+                    // add all separate visits
+                    for (const visit of visits) {
+                        if (visit.visitTime !== undefined
+                            && Moment(visit.visitTime).isAfter(dateStart)
+                            && Moment(visit.visitTime).isBefore(dateEnd)) {
+                            // create new HistoryItem's with different lastVisitTime
+                            var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                            daysArray[Moment(newHistoryItem.lastVisitTime).weekday()].push(newHistoryItem);
+                        }
                     }
                 }
             }
@@ -112,16 +120,22 @@ export default class HistoryApi {
 
         if (repeatedVisits) {
             for (const historyItem of historyItems) {
-                let visits = await browser.history.getVisits({ url: historyItem.url });
-                // add all separate visits
-                for (const visit of visits) {
-                    if (visit.visitTime !== undefined) {
-                        // create new HistoryItem's with different lastVisitTime
-                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
-                        const idx = Moment(newHistoryItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
-                        if (idx < 0 || idx >= 35)
-                            continue;
-                        daysArray[idx].push(newHistoryItem);
+                if (historyItem.visitCount == 1){ // then add the one historyItem
+                  daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+                } else {
+                    let visits = await browser.history.getVisits({ url: historyItem.url });
+                    // add all separate visits
+                    for (const visit of visits) {
+                        if (visit.visitTime !== undefined
+                            && Moment(visit.visitTime).isAfter(dateStart)
+                            && Moment(visit.visitTime).isBefore(dateEnd)) {
+                            // create new HistoryItem's with different lastVisitTime
+                            var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                            const idx = Moment(newHistoryItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+                            if (idx < 0 || idx >= 35)
+                                continue;
+                            daysArray[idx].push(newHistoryItem);
+                        }
                     }
                 }
             }
