@@ -19,21 +19,32 @@ export default class HistoryApi {
             maxResults: Number.MAX_SAFE_INTEGER
         });
 
+        var allHistoryItems = []; // multi-visits separated
         for (const historyItem of historyItems) {
             let visits = await browser.history.getVisits({ url: historyItem.url });
 
-            // Look for the latest visit item of this day
-            const todayFirstVisit = visits.reverse().find(
-                visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
-            );
+            // // Look for the latest visit item of this day
+            // const todayFirstVisit = visits.reverse().find(
+            //   visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
+            // );
+            //
+            // // Sometimes there aren't any visits (during first load usually)
+            // if (todayFirstVisit) {
+            //   historyItem.lastVisitTime = todayFirstVisit.visitTime;
+            // }
 
-            // Sometimes there aren't any visits (during first load usually)
-            if (todayFirstVisit) {
-                historyItem.lastVisitTime = todayFirstVisit.visitTime;
+            // add all single visits
+            for (const visit of visits) {
+              if (visit.visitTime !== undefined) {
+                // create new HistoryItem's with different lastVisitTime
+                var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                allHistoryItems.push(newHistoryItem);
+              }
             }
         }
 
-        return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        // return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        return [allHistoryItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
     }
 
     /**
