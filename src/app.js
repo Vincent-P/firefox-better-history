@@ -28,13 +28,18 @@ class App extends React.Component {
             currentView = VIEWS.WEEK;
         }
 
+        let repeatedVisits = props.repeatedVisits;
+        if (repeatedVisits == null || repeatedVisits == undefined) {
+            repeatedVisits = false;
+        }
+
         this.state = {
             currentView,
             date: Moment(),
             loading: true,
             search: null,
             visits: [],
-            repeatedVisits: props.repeatedVisits
+            repeatedVisits
         };
     }
 
