@@ -8,7 +8,7 @@ export default class HistoryApi {
     /**
      * Return a Promise containing the visits of a day, most recent first
      */
-    static async getDayVisits(today) {
+    static async getDayVisits(today, repeatedVisits) {
         const todayStart = Moment(today).startOf('day').toDate();
         const todayEnd = Moment(today).endOf('day').toDate();
 
@@ -23,28 +23,32 @@ export default class HistoryApi {
         for (const historyItem of historyItems) {
             let visits = await browser.history.getVisits({ url: historyItem.url });
 
-            // // Look for the latest visit item of this day
-            // const todayFirstVisit = visits.reverse().find(
-            //   visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
-            // );
-            //
-            // // Sometimes there aren't any visits (during first load usually)
-            // if (todayFirstVisit) {
-            //   historyItem.lastVisitTime = todayFirstVisit.visitTime;
-            // }
+            if (repeatedVisits) {
+                // add all separately visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        allHistoryItems.push(newHistoryItem);
+                    }
+                }
+            } else { // add only last visit
+                // Look for the latest visit item of this day
+                const todayFirstVisit = visits.reverse().find(
+                    visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
+                );
 
-            // add all single visits
-            for (const visit of visits) {
-              if (visit.visitTime !== undefined) {
-                // create new HistoryItem's with different lastVisitTime
-                var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
-                allHistoryItems.push(newHistoryItem);
-              }
+                // Sometimes there aren't any visits (during first load usually)
+                if (todayFirstVisit) {
+                    historyItem.lastVisitTime = todayFirstVisit.visitTime;
+                }
             }
         }
-
-        // return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
-        return [allHistoryItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        if (repeatedVisits) {
+          return [allHistoryItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        } else {
+          return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        }
     }
 
     /**

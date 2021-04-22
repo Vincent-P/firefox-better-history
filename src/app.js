@@ -94,7 +94,7 @@ class App extends React.Component {
         let filteredVisits = [];
         if (loading) {
             if (currentView === VIEWS.DAY) {
-                HistoryApi.getDayVisits(date)
+                HistoryApi.getDayVisits(date, repeatedVisits)
                     .then((newVisits) => {
                         this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });
