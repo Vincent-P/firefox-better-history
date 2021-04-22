@@ -33,8 +33,14 @@ class App extends React.Component {
             date: Moment(),
             loading: true,
             search: null,
-            visits: []
+            visits: [],
+            repeatedVisits: props.repeatedVisits
         };
+    }
+
+    toggleRepeatedVisits () {
+        browser.storage.local.set({repeatedVisits: !this.state.repeatedVisits});
+        this.setState({ repeatedVisits: !this.state.repeatedVisits, loading: true });
     }
 
     setView (newView) {
@@ -83,7 +89,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { currentView, date, loading, search } = this.state;
+        const { currentView, date, loading, search, repeatedVisits } = this.state;
 
         let filteredVisits = [];
         if (loading) {
@@ -138,6 +144,9 @@ class App extends React.Component {
 
                     <button className="toolbar-item-right ghost-button align-right" onClick={ () => this.previous() }><Icon default="back"/></button>
                     <button className="toolbar-item-right ghost-button" onClick={ () => this.next() }><Icon default="forward"/></button>
+                    { repeatedVisits ? <button className="toolbar-item-right ghost-button" title="Hide Repeated Visits" onClick={ () => this.toggleRepeatedVisits() }><Icon default="multiple"/></button>
+                      : <button className="toolbar-item-right ghost-button" title="Show Repeated Visits" onClick={ () => this.toggleRepeatedVisits() }><Icon default="multiple-disabled"/></button>
+                    }
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.DAY) }>Day</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.WEEK) }>Week</button>
                     <button className="toolbar-item-right default-button" onClick={ () => this.setView(VIEWS.MONTH) }>Month</button>
