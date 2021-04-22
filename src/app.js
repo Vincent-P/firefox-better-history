@@ -111,7 +111,7 @@ class App extends React.Component {
                     });
             }
             else if (currentView === VIEWS.MONTH) {
-                HistoryApi.getMonthVisits(date)
+                HistoryApi.getMonthVisits(date, repeatedVisits)
                     .then((newVisits) => {
                         this.setState({loading: false, visits: newVisits, filteredVisits: newVisits});
                     });

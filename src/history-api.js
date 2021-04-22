@@ -90,7 +90,7 @@ export default class HistoryApi {
     /**
      * @param {Date} date a date used to check the month and year of each visits
      */
-    static async getMonthVisits(date) {
+    static async getMonthVisits(date, repeatedVisits) {
         const firstDayOfMonth = date.clone().startOf('month');
         const firstDayOfWeekBeforeMonth = firstDayOfMonth.startOf('week');
         // dont use firstDayOfMonth anymore
@@ -110,11 +110,28 @@ export default class HistoryApi {
             daysArray.push([]);
         }
 
-        for (const historyItem of historyItems) {
-            const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
-            if (idx < 0 || idx >= 35)
-                continue;
-            daysArray[idx].push(historyItem);
+        if (repeatedVisits) {
+            for (const historyItem of historyItems) {
+                let visits = await browser.history.getVisits({ url: historyItem.url });
+                // add all separate visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        const idx = Moment(newHistoryItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+                        if (idx < 0 || idx >= 35)
+                            continue;
+                        daysArray[idx].push(newHistoryItem);
+                    }
+                }
+            }
+        } else {
+            for (const historyItem of historyItems) {
+                const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+                if (idx < 0 || idx >= 35)
+                    continue;
+                daysArray[idx].push(historyItem);
+            }
         }
 
         return daysArray;
