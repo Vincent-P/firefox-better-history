@@ -88,7 +88,7 @@ export default class HistoryApi {
             }
         }
 
-        return daysArray;
+        return daysArray.map(day => day.sort((a, b) => b.lastVisitTime - a.lastVisitTime));
     }
 
     /**
@@ -140,7 +140,7 @@ export default class HistoryApi {
             }
         }
 
-        return daysArray;
+        return daysArray.map(day => day.sort((a, b) => b.lastVisitTime - a.lastVisitTime));
     }
 
     static formatDayHeader(date) {
