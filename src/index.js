@@ -10,7 +10,7 @@ async function main() {
     Moment.locale(language);
 
     const data = await browser.storage.local.get();
-    ReactDOM.render(<App defaultView={data.last_visited}/>, document.getElementById('root'));
+    ReactDOM.render(<App defaultView={data.last_visited} repeatedVisits={data.repeatedVisits}/>, document.getElementById('root'));
 }
 
 main();

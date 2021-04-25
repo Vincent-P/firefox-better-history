@@ -8,7 +8,7 @@ export default class HistoryApi {
     /**
      * Return a Promise containing the visits of a day, most recent first
      */
-    static async getDayVisits(today) {
+    static async getDayVisits(today, repeatedVisits) {
         const todayStart = Moment(today).startOf('day').toDate();
         const todayEnd = Moment(today).endOf('day').toDate();
 
@@ -19,26 +19,43 @@ export default class HistoryApi {
             maxResults: Number.MAX_SAFE_INTEGER
         });
 
+        var allHistoryItems = []; // multi-visits separated
         for (const historyItem of historyItems) {
             let visits = await browser.history.getVisits({ url: historyItem.url });
 
-            // Look for the latest visit item of this day
-            const todayFirstVisit = visits.reverse().find(
-                visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
-            );
+            if (repeatedVisits) {
+                // add all separately visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined
+                        && Moment(visit.visitTime).isAfter(todayStart)
+                        && Moment(visit.visitTime).isBefore(todayEnd)) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        allHistoryItems.push(newHistoryItem);
+                    }
+                }
+            } else { // add only last visit
+                // Look for the latest visit item of this day
+                const todayFirstVisit = visits.reverse().find(
+                    visitItem => Moment(visitItem.visitTime).isSame(Moment(today), 'day')
+                );
 
-            // Sometimes there aren't any visits (during first load usually)
-            if (todayFirstVisit) {
-                historyItem.lastVisitTime = todayFirstVisit.visitTime;
+                // Sometimes there aren't any visits (during first load usually)
+                if (todayFirstVisit) {
+                    historyItem.lastVisitTime = todayFirstVisit.visitTime;
+                }
             }
         }
-
-        return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        if (repeatedVisits) {
+          return [allHistoryItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        } else {
+          return [historyItems.sort((a, b) => b.lastVisitTime - a.lastVisitTime)];
+        }
     }
 
     /**
      */
-    static async getWeekVisits(date) {
+    static async getWeekVisits(date, repeatedVisits) {
         const dateStart = date.clone().startOf('week').toDate();
         const dateEnd = date.clone().endOf('week').toDate();
 
@@ -51,17 +68,33 @@ export default class HistoryApi {
 
         const daysArray = new Array([], [], [], [], [], [], []);
 
-        for (const historyItem of historyItems) {
-            daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+        if (repeatedVisits) {
+            for (const historyItem of historyItems) {
+                let visits = await browser.history.getVisits({ url: historyItem.url });
+                // add all separate visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined
+                        && Moment(visit.visitTime).isAfter(dateStart)
+                        && Moment(visit.visitTime).isBefore(dateEnd)) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        daysArray[Moment(newHistoryItem.lastVisitTime).weekday()].push(newHistoryItem);
+                    }
+                }
+            }
+        } else {
+            for (const historyItem of historyItems) {
+                daysArray[Moment(historyItem.lastVisitTime).weekday()].push(historyItem);
+            }
         }
 
-        return daysArray;
+        return daysArray.map(day => day.sort((a, b) => b.lastVisitTime - a.lastVisitTime));
     }
 
     /**
      * @param {Date} date a date used to check the month and year of each visits
      */
-    static async getMonthVisits(date) {
+    static async getMonthVisits(date, repeatedVisits) {
         const firstDayOfMonth = date.clone().startOf('month');
         const firstDayOfWeekBeforeMonth = firstDayOfMonth.startOf('week');
         // dont use firstDayOfMonth anymore
@@ -81,14 +114,33 @@ export default class HistoryApi {
             daysArray.push([]);
         }
 
-        for (const historyItem of historyItems) {
-            const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
-            if (idx < 0 || idx >= 35)
-                continue;
-            daysArray[idx].push(historyItem);
+        if (repeatedVisits) {
+            for (const historyItem of historyItems) {
+                let visits = await browser.history.getVisits({ url: historyItem.url });
+                // add all separate visits
+                for (const visit of visits) {
+                    if (visit.visitTime !== undefined
+                        && Moment(visit.visitTime).isAfter(dateStart)
+                        && Moment(visit.visitTime).isBefore(dateEnd)) {
+                        // create new HistoryItem's with different lastVisitTime
+                        var newHistoryItem = {title:historyItem.title, url:historyItem.url, lastVisitTime:visit.visitTime};
+                        const idx = Moment(newHistoryItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+                        if (idx < 0 || idx >= 35)
+                            continue;
+                        daysArray[idx].push(newHistoryItem);
+                    }
+                }
+            }
+        } else {
+            for (const historyItem of historyItems) {
+                const idx = Moment(historyItem.lastVisitTime).dayOfYear() - dateStart.dayOfYear();
+                if (idx < 0 || idx >= 35)
+                    continue;
+                daysArray[idx].push(historyItem);
+            }
         }
 
-        return daysArray;
+        return daysArray.map(day => day.sort((a, b) => b.lastVisitTime - a.lastVisitTime));
     }
 
     static formatDayHeader(date) {
