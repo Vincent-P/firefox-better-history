@@ -13,5 +13,11 @@ function onVisited(historyItem) {
 browser.browserAction.onClicked.addListener(openMyPage);
 browser.history.onVisited.addListener(onVisited);
 
+browser.commands.onCommand.addListener((command) => {
+  if (command === "open-better-history") {
+      openMyPage();
+  }
+});
+
 // dev only
 //openMyPage();

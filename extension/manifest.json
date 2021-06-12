@@ -20,6 +20,14 @@
         "default_title": "Better History"
     },
 
+    "commands": {
+        "open-better-history": {
+            "suggested_key": {
+                "default": "Ctrl+Alt+H"
+            }
+        }
+    },
+
     "permissions": [
         "history",
         "storage"
