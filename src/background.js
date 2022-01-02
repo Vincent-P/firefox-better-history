@@ -5,7 +5,7 @@ function openMyPage() {
 }
 
 function onVisited(historyItem) {
-  if (historyItem.url == browser.extension.getURL("./index.html")) {
+  if (historyItem.url == browser.runtime.getURL("./index.html")) {
     browser.history.deleteUrl({url: historyItem.url});
   }
 }
