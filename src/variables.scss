@@ -148,12 +148,12 @@ $midscreen-max-width: 1400px;
     --primary-icon-color: var(--grey-90-a80);
     --secondary-icon-color: var(--grey-90-a60);
     --icon-fill-color: var(--grey-90);
-    --background-cancel-icon: url(/search-cancel.svg) no-repeat center center;
+    --background-cancel-icon: url(icons/search-cancel.svg) no-repeat center center;
 
     --link-color: var(--blue-50);
     --link-hover-color: var(--blue-60);
     --link-active-color: var(--blue-70);
-    --link-external-icon: url(/open-in-new.svg);
+    --link-external-icon: url(icons/open-in-new.svg);
 
     @media (prefers-color-scheme: dark) {
         --background-color: var(--grey-80);
@@ -178,11 +178,11 @@ $midscreen-max-width: 1400px;
         --primary-icon-color: var(--grey-10-a80);
         --secondary-icon-color: var(--grey-10-a60);
         --icon-fill-color: var(--grey-10);
-        --background-cancel-icon: url(/search-cancel-light.svg) no-repeat center center;
+        --background-cancel-icon: url(icons/search-cancel-light.svg) no-repeat center center;
 
         --link-color: var(--blue-40);
         --link-hover-color: var(--blue-50);
         --link-active-color: var(--blue-60);
-        --link-external-icon: url(/open-in-new-light.svg);
+        --link-external-icon: url(icons/open-in-new-light.svg);
     }
 }
