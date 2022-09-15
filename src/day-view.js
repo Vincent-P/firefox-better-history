@@ -10,7 +10,7 @@ const NoHistory = () => (
 const History = ({visits}) => (
     <div className="history-week-day-items">
         { visits.map(visit => (
-            <div className="history-item">
+            <a className="history-item" href={ visit.url } target="_blank" rel="noopener noreferrer">
                 <span className="history-item-date">
                     { Moment(visit.lastVisitTime).format("h:mm:ss A") }
                 </span>
@@ -22,11 +22,7 @@ const History = ({visits}) => (
                 <span className="history-item-url ellipsis-text">
                     { visit.title != "" ? visit.title : visit.url }
                 </span>
-
-                <div className="history-item-link">
-                    <a href={ visit.url } target="_blank" rel="noopener noreferrer">Link</a>
-                </div>
-            </div>
+            </a>
         ))}
     </div>
 );

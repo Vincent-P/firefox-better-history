@@ -28,11 +28,10 @@ body {
 }
 
 a {
-    color: var(--link-color);
+    color: var(--primary-text-color);
     text-decoration: none;
 
     &:hover {
-        color: var(--link-hover-color);
         text-decoration: underline;
     }
 
@@ -58,6 +57,10 @@ a {
         width: 16px;
     }
 
+}
+
+abbr{
+    text-decoration: none;
 }
 
 p, h1 {

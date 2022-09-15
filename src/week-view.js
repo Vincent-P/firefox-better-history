@@ -10,7 +10,7 @@ const NoHistory = () => (
 
 const History = ({visits}) =>
       visits.map((visit) => (
-        <div className="history-item">
+        <a className="history-item" href={ visit.url } target="_blank" rel="noopener noreferrer">
             <div className="history-item-icon">
                 <Icon className="img-icon" default="globe" faviconUrl={visit.url}/>
             </div>
@@ -20,11 +20,7 @@ const History = ({visits}) =>
                     { visit.title != "" ? visit.title : visit.url }
                 </abbr>
             </span>
-
-            <div className="history-item-link">
-                <a href={ visit.url } target="_blank" rel="noopener noreferrer"></a>
-            </div>
-        </div>
+        </a>
     ))
 ;
 
